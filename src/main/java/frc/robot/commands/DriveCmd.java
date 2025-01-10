@@ -4,53 +4,47 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.subsystems.Constants;
+import frc.robot.subsystems.SwerveSub;
 
 public class DriveCmd extends Command {
   private final SwerveSub swerveSub;
   private final CommandJoystick RJoystick;
   private final CommandJoystick LJoystick;
-  private boolean isSlow;
 
   public DriveCmd(SwerveSub swerveSubsystem, CommandJoystick leftJoystick, CommandJoystick rightJoystick) {
     RJoystick = rightJoystick;
     LJoystick = leftJoystick;
 
-    addRequirements(getRequirements());
+    addRequirements(swerveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    swerveSub.setMotors(0, 0);
-    isSlow = false;
-    //TODO: CONFIGURE BUTTON PRESS FOR SLOW MODE 
+    swerveSub.drive(0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // TODO: CHECK JOYSTICK AXIS AND SET THEM TO A CONSTANT FOR BETTER READABILITY
-    if (isSlow == false) {
-      // 1 is added to axis 2 to increments the value, not reduce the value.
-      diffDrive.curvatureDrive(LJoystick.getRawAxis(1) * (LJoystick.getRawAxis(2) + 1) / 2,
-          RJoystick.getRawAxis(1), true);
-    } else if (isSlow == true) {
-      diffDrive.curvatureDrive((LJoystick.getRawAxis(1) * (LJoystick.getRawAxis(2) + 1) / 2) / 2,
-          (RJoystick.getRawAxis(1)) / 2, true);
-    } else {
-      diffDrive.curvatureDrive(LJoystick.getRawAxis(1) * (LJoystick.getRawAxis(2) + 1) / 2,
-          RJoystick.getRawAxis(1), true);
-    }
+    swerveSub.drive(
+        (LJoystick.getX() * Constants.speedMultiplier) * LJoystick.getRawAxis(3),
+        (LJoystick.getY() * Constants.speedMultiplier) * ,
+        RJoystick.getX() * Constants.speedMultiplier);
+    // swerveSub.drive(LJoystick.getX() / 2, LJoystick.getY() / 2, RJoystick.getX()
+    // / 2);
+    // swerveSub.drive(LJoystick.getX(), LJoystick.getY(), RJoystick.getX());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerveSub.setMotors(0, 0);
+    swerveSub.drive(0, 0, 0);
   }
 
   // Returns true when the command should end.

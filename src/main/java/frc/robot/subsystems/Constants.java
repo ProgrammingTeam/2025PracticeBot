@@ -5,5 +5,5 @@
 package frc.robot.subsystems;
 
 public class Constants {
-    public boolean isSlow;
+    public static final double speedMultiplier = 1;
 }
