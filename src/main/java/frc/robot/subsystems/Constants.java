@@ -6,4 +6,8 @@ package frc.robot.subsystems;
 
 public class Constants {
     public static final double speedMultiplier = 1;
+    public static final int joyX = 0;
+    public static final int joyY = 1;
+    public static final int joyZ = 2;
+    public static final int joySilder = 3;
 }
