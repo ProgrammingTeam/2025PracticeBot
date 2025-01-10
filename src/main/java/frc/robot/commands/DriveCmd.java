@@ -17,10 +17,11 @@ public class DriveCmd extends Command {
   private final CommandJoystick LJoystick;
 
   public DriveCmd(SwerveSub swerveSubsystem, CommandJoystick leftJoystick, CommandJoystick rightJoystick) {
+    swerveSub = swerveSubsystem;
     RJoystick = rightJoystick;
     LJoystick = leftJoystick;
 
-    addRequirements(swerveSubsystem);
+    addRequirements(swerveSub);
   }
 
   // Called when the command is initially scheduled.
