@@ -6,6 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
+import frc.robot.commands.DriveCmd;
+import frc.robot.subsystems.SwerveSub;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -29,9 +31,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSub subSwerve;
+  private final SwerveSub subSwerve = new SwerveSub();
 
-  private final Drivecmd driveCom;
+  private final DriveCmd driveCom;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
@@ -43,12 +45,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    driveCom = new Drivecmd(subSwerve, leftJoystick, rightJoystick);
+    driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     subSwerve.setDefaultCommand(driveCom);
     // Configure the trigger bindings
     configureBindings();
-  }
-
   }
 
   /**
@@ -82,6 +82,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(null); // TODO: ADD A AUTO CMD
+    return Autos.exampleAuto(); // TODO: ADD A AUTO CMD
   }
 }
