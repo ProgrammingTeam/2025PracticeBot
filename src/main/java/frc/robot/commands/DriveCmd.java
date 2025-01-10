@@ -32,13 +32,11 @@ public class DriveCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // X = 0, Y = 1, Z = 2, Slider = 3
     swerveSub.drive(
-        (LJoystick.getX() * Constants.speedMultiplier) * LJoystick.getRawAxis(3),
-        (LJoystick.getY() * Constants.speedMultiplier) * ,
-        RJoystick.getX() * Constants.speedMultiplier);
-    // swerveSub.drive(LJoystick.getX() / 2, LJoystick.getY() / 2, RJoystick.getX()
-    // / 2);
-    // swerveSub.drive(LJoystick.getX(), LJoystick.getY(), RJoystick.getX());
+        (LJoystick.getRawAxis(0) * Constants.speedMultiplier) * LJoystick.getRawAxis(3),
+        (LJoystick.getRawAxis(1) * Constants.speedMultiplier) * LJoystick.getRawAxis(3),
+        (RJoystick.getRawAxis(0) * Constants.speedMultiplier) * RJoystick.getRawAxis(3));
   }
 
   // Called once the command ends or is interrupted.
