@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.subsystems.Constants;
+import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSub;
 
 public class DriveCmd extends Command {

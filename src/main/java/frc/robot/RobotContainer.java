@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.Constants.OperatorConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
 import frc.robot.subsystems.SwerveSub;
