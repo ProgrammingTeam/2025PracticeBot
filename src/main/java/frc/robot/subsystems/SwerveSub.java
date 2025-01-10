@@ -17,23 +17,26 @@ import swervelib.parser.SwerveParser;
 
 public class SwerveSub extends SubsystemBase {
   SwerveDrive swerveDrive;
+
   /** Creates a new SwerveSub. */
   public SwerveSub() {
-    try{
+    try {
       double maximumSpeed = Units.feetToMeters(4.5);
-    File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
-    swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
-    }
-    catch(Exception e){
+      File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
+      swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
-public void drive(double x,double y,double rot) {
-  swerveDrive.drive(new Translation2d(y,x), rot, true, false);
-}
-public void zeroGyro(){
-  swerveDrive.zeroGyro();
-}
+
+  public void drive(double x, double y, double rot) {
+    swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+  }
+
+  public void zeroGyro() {
+    swerveDrive.zeroGyro();
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
