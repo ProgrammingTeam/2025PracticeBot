@@ -13,7 +13,7 @@ public class Constants {
 
     public static class OperatorConstants {
         public static final int kDriverControllerPort = 0;
-        public static final int LeftJoystickPort = 0;
-        public static final int RightJoystickPort = 1;
+        public static final int LeftJoystickPort = 1;
+        public static final int RightJoystickPort = 2;
     }
 }
