@@ -7,8 +7,6 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.SwerveSub;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
@@ -33,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSub subSwerve;
+  private final SwerveSub subSwerve = new SwerveSub();
 
   private final DriveCmd driveCom;
 
@@ -51,8 +49,6 @@ public class RobotContainer {
     subSwerve.setDefaultCommand(driveCom);
     // Configure the trigger bindings
     configureBindings();
-  }
-
   }
 
   /**
@@ -86,6 +82,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(null); // TODO: ADD A AUTO CMD
+    return Autos.exampleAuto(); // TODO: ADD A AUTO CMD
   }
 }
