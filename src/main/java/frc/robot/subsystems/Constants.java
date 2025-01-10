@@ -10,4 +10,10 @@ public class Constants {
     public static final int joyY = 1;
     public static final int joyZ = 2;
     public static final int joySilder = 3;
+
+    public static class OperatorConstants {
+        public static final int kDriverControllerPort = 0;
+        public static final int LeftJoystickPort = 0;
+        public static final int RightJoystickPort = 1;
+    }
 }
