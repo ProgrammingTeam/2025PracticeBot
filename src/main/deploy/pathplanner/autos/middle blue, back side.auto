@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Side Auto"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "place coral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "grab algae"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "throw algae on floor"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go to algae + coral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "grab algae"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "throw algae on floor"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "grab coral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "go back to thing"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "place coral"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
