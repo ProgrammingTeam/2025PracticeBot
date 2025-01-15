@@ -8,7 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
 import frc.robot.subsystems.SwerveSub;
+import swervelib.parser.SwerveParser;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
 
 import java.io.File;
@@ -19,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import swervelib.SwerveDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -31,8 +34,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final SwerveSub subSwerve = new SwerveSub();
-
+  SwerveDrive m_Swerve;
+  private final SwerveSub subSwerve;
+ 
   private final DriveCmd driveCom;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -45,6 +49,15 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    try {
+      double maximumSpeed = Units.feetToMeters(4.5);
+      File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
+      m_Swerve = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
+    } catch (Exception e) {
+      System.out.println("Failed");
+      e.printStackTrace();
+    }
+    subSwerve = new SwerveSub(m_Swerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     subSwerve.setDefaultCommand(driveCom);
     // Configure the trigger bindings
