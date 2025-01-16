@@ -16,17 +16,11 @@ import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
 public class SwerveSub extends SubsystemBase {
-  SwerveDrive swerveDrive;
+SwerveDrive swerveDrive;
 
   /** Creates a new SwerveSub. */
-  public SwerveSub() {
-    try {
-      double maximumSpeed = Units.feetToMeters(4.5);
-      File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
-      swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public SwerveSub(SwerveDrive swerve) {
+    swerveDrive = swerve;
   }
 
   public void drive(double x, double y, double rot) {

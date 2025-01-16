@@ -4,11 +4,32 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class LimelightSub extends SubsystemBase {
-  /** Creates a new LimelightSub. */
-  public LimelightSub() {}
+/*   public double distenceFromTarget;
+ // public double VerticleOffsetFromTarget;
+  private double heightDifOfLimeLightFrom;
+  private double TyValue;
+  private int TidValue;
+  private NetworkTableEntry LimeTY;
+  private NetworkTableEntry LimeTid;
+
+  // Creates a new LimelightSub. 
+  public LimelightSub() {
+    NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    LimeTY = Limelight.getEntry("ty");
+    LimeTid = Limelight.getEntry("tid");
+
+    opposite = Constants.LimelightConstants.targetHeights[TidValue] - Constants.LimelightConstants.limelightHeight;
+      distenceFromTarget = opposite
+         Math.tan(Math.toRadians(LimeTY.getDouble(0) + Constants.LimelightConstants.angleOffset));
+
+  }*/
 
   @Override
   public void periodic() {
