@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
+  //TODO: REMOVE BACK AND FRONT MOTOR LOGIC -- FIX LOGIC AND IMPLEMENT FEATURES
   /** Creates a new ElevatorSub. */
   private SparkMax motor1 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
   private SparkMax motor2 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
