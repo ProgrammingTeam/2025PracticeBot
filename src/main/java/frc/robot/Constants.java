@@ -24,5 +24,7 @@ public class Constants {
 
     }
 
-
+    public static class CANIds {
+        public static final int someMotor = 0;
+    }
 }
