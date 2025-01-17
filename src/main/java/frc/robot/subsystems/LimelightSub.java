@@ -11,25 +11,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LimelightSub extends SubsystemBase {
-/*   public double distenceFromTarget;
- // public double VerticleOffsetFromTarget;
+  public double distanceFromTarget;
+  // public double VerticleOffsetFromTarget;
   private double heightDifOfLimeLightFrom;
+  private double opposite;
   private double TyValue;
   private int TidValue;
   private NetworkTableEntry LimeTY;
   private NetworkTableEntry LimeTid;
 
-  // Creates a new LimelightSub. 
+  // Creates a new LimelightSub.
   public LimelightSub() {
     NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
     LimeTY = Limelight.getEntry("ty");
     LimeTid = Limelight.getEntry("tid");
 
     opposite = Constants.LimelightConstants.targetHeights[TidValue] - Constants.LimelightConstants.limelightHeight;
-      distenceFromTarget = opposite
-         Math.tan(Math.toRadians(LimeTY.getDouble(0) + Constants.LimelightConstants.angleOffset));
+    distanceFromTarget = opposite / Math.tan
+    (Math.toRadians(LimeTY.getDouble(0) + Constants.LimelightConstants.angleOffset));
 
-  }*/
+  }
 
   @Override
   public void periodic() {
