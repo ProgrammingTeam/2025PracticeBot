@@ -12,6 +12,7 @@ import swervelib.parser.SwerveParser;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
+import com.reduxrobotics.canand.CanandEventLoop;
 
 import java.io.File;
 
@@ -34,6 +35,7 @@ import swervelib.SwerveDrive;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  
   SwerveDrive m_Swerve;
   private final SwerveSub subSwerve;
  
@@ -49,6 +51,7 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    CanandEventLoop.getInstance();
     try {
       double maximumSpeed = Units.feetToMeters(4.5);
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
