@@ -82,7 +82,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    //leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is

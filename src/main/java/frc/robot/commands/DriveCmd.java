@@ -32,9 +32,9 @@ public class DriveCmd extends Command {
   @Override
   public void execute() {
     swerveSub.drive(
-        (LJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) *-1/2,
-        (LJoystick.getRawAxis(Constants.joyY) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) *-1/2,
-        (RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier) * (RJoystick.getRawAxis(Constants.joySilder)-1) *-1/2
+        (Math.pow(LJoystick.getRawAxis(Constants.joyX), 3) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) *-1/2,
+        (Math.pow(LJoystick.getRawAxis(Constants.joyY), 3) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) *-1/2,
+        (Math.pow(RJoystick.getRawAxis(Constants.joyX), 3) * Constants.speedMultiplier) * (RJoystick.getRawAxis(Constants.joySilder)-1) *-1/2
     );
   }
 
