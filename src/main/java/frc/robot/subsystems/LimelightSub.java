@@ -4,9 +4,18 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LimelightSub extends SubsystemBase {
+  public double distenceFromTarget;
+  private double opposite;
+  private double TxValue;
+  private double TyValue;
+  private int TidValue;
+  private NetworkTableEntry LimeTX;
+  private NetworkTableEntry LimeTY;
+  private NetworkTableEntry LimeTid;
   /** Creates a new LimelightSub. */
   public LimelightSub() {}
 

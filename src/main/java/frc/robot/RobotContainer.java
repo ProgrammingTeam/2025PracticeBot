@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
-import frc.robot.subsystems.Constants.OperatorConstants;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.DispenserCommand;
 import frc.robot.subsystems.SwerveSub;
+import frc.robot.subsystems.FunnelSub;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -32,8 +34,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSub subSwerve = new SwerveSub();
-
+  private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final DriveCmd driveCom;
+  private final IntakeCommand inCom; 
+  private final DispenserCommand disCom;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
@@ -45,8 +49,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    inCom = new IntakeCommand(FunnelSubSystem);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     subSwerve.setDefaultCommand(driveCom);
+    disCom = new DispenserCommand(FunnelSubSystem); 
     // Configure the trigger bindings
     configureBindings();
   }
@@ -67,6 +73,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    m_driverController.a().whileTrue(inCom);
+    m_driverController.b().whileTrue(disCom);
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
