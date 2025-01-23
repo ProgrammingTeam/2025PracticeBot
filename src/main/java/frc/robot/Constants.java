@@ -5,27 +5,49 @@
 package frc.robot;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
-//Alex was here 1/16/2025
+// Alex was here 1/16/2025
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
   public static class ElevatorConstants {
     public static final double kP = 4;
-    public static class Heights {
-      public static final double L1 = 1;
-      public static final double L2 = 2;
-      public static final double L3 = 3;
-      public static final double L4 = 4;
-      public static final double corolStation = 0.5;
-      public static final double travel = 0;
+
+    public static enum ElevatorPositions {
+      L1(18),
+      L2(31),
+      L3(47),
+      L4(72),
+      corolStation(37),
+      travel(0),
+      net(4),
+      startAlgaeLow(3),
+      startAlgaeHigh(2),
+      processor(1);
+
+      public final double height;
+
+      private ElevatorPositions(double height) {
+        this.height = height;
+      }
+      // public static final double L1 = 18;
+      // public static final double L2 = 31;
+      // public static final double L3 = 47;
+      // public static final double L4 = 72;
+      // public static final double corolStation = 37;
+      // public static final double travel = 0;
     }
   }
 }
