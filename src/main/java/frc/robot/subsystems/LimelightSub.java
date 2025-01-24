@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -11,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LimelightSub extends SubsystemBase {
+
   public double distanceFromTarget;
   // public double VerticleOffsetFromTarget;
   private double heightDifOfLimeLightFrom;
@@ -31,6 +33,7 @@ public class LimelightSub extends SubsystemBase {
     (Math.toRadians(LimeTY.getDouble(0) + Constants.LimelightConstants.angleOffset));
 
   }
+
 
   @Override
   public void periodic() {
