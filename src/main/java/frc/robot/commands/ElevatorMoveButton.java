@@ -9,16 +9,18 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ElevatorSub;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ElevatorMoveButton extends Command {
-  private final CommandXboxController m_Controller;
   private final ElevatorSub m_ElevatorSub;
+  private final ElevatorPositions m_Position;
   /** Creates a new ElevatorMoveButton. */
-  private final PIDController pid = new PIDController(kP, kI, kD);
-  public ElevatorMoveButton(ElevatorSub elevatorSub, CommandXboxController controller) {
+  private final PIDController pid = new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+  public ElevatorMoveButton(ElevatorSub elevatorSub, ElevatorPositions position) {
     m_ElevatorSub = elevatorSub;
-    m_Controller = controller;
+    m_Position = position;
     addRequirements(m_ElevatorSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -27,14 +29,14 @@ public class ElevatorMoveButton extends Command {
   @Override
   public void initialize() {
     m_ElevatorSub.move(0);
-    
-
+    pid.setSetpoint(m_Position.height);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_ElevatorSub.move(0);
+    pid.calculate();
   }
 
   // Called once the command ends or is interrupted.

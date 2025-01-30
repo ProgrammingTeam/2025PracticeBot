@@ -5,10 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ElevatorMoveButton;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
-
+import frc.robot.subsystems.ElevatorSub;
 import java.io.File;
 
 import edu.wpi.first.wpilibj.Filesystem;
@@ -25,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private final ElevatorSub m_ElevatorSub = new ElevatorSub();
+  ;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -32,7 +36,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
    public RobotContainer() {
-
+    configureBindings();
   }
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -47,7 +51,17 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
+        m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L1));
+        m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L2));
+        m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L3));
+        m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L4));
+        m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.corolStation));
+        m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.travel));
 
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.processor));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
