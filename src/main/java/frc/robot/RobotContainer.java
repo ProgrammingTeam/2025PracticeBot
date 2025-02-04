@@ -4,29 +4,23 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.DriveCmd;
-import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.DispenserCommand;
-import frc.robot.subsystems.SwerveSub;
-
-import frc.robot.subsystems.FunnelSub;
-import swervelib.parser.SwerveParser;
-
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Joystick;
-
 import java.io.File;
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import swervelib.SwerveDrive;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.DispenserCommand;
+import frc.robot.commands.DriveCmd;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.FunnelSub;
+import frc.robot.subsystems.SwerveSub;
+import swervelib.parser.SwerveParser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -57,6 +51,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     inCom = new IntakeCommand(FunnelSubSystem);
+    disCom = new DispenserCommand(FunnelSubSystem);
 
     try {
       double maximumSpeed = Units.feetToMeters(4.5);

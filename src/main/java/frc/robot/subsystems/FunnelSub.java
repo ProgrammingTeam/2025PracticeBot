@@ -22,7 +22,7 @@ public class FunnelSub extends SubsystemBase {
 
     public void forward() {
       intakeMotor.set(0.2);
-    }
+    } 
 
     public void stop() {
       intakeMotor.set(0);

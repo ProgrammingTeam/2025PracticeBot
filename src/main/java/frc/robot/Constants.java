@@ -31,4 +31,8 @@ public class Constants {
         public static final int someMotor = 0;
     }
 
+    public static class AlgeaConstants {
+        public static final double armGearRatio = 1/4;
+    }
+
 }
