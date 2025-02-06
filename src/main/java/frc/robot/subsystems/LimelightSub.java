@@ -7,32 +7,64 @@ package frc.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class LimelightSub extends SubsystemBase {
-/*   public double distenceFromTarget;
+  public double distenceFromTarget;
  // public double VerticleOffsetFromTarget;
-  private double heightDifOfLimeLightFrom;
+  private double heightDifOfLimeLightToTag;
   private double TyValue;
-  private int TidValue;
+  private double TxValue;
+  private double horrizontalOffsetFromTag;
+  private long tagIDNumber;
   private NetworkTableEntry LimeTY;
+  private NetworkTableEntry LimeTX;
   private NetworkTableEntry LimeTid;
+  
 
   // Creates a new LimelightSub. 
   public LimelightSub() {
+    
+      
+   try {
     NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
     LimeTY = Limelight.getEntry("ty");
+    LimeTX = Limelight.getEntry("tx");
     LimeTid = Limelight.getEntry("tid");
-
-    opposite = Constants.LimelightConstants.targetHeights[TidValue] - Constants.LimelightConstants.limelightHeight;
-      distenceFromTarget = opposite
-         Math.tan(Math.toRadians(LimeTY.getDouble(0) + Constants.LimelightConstants.angleOffset));
-
-  }*/
+  } catch (Exception e) {
+    // TODO: handle exception
+  }
+    }
 
   @Override
   public void periodic() {
+    try {
+      
+
+    TyValue = LimeTY.getDouble(0) +2;
+    TxValue = LimeTX.getDouble(0); 
+    tagIDNumber = LimeTid.getInteger(0);  
+
+    heightDifOfLimeLightToTag = Constants.LimelightConstants.targetHeights[(int)tagIDNumber] - Constants.LimelightConstants.limelightHeight;
+      distenceFromTarget = heightDifOfLimeLightToTag / 
+       Math.tan(Math.toRadians(TyValue + Constants.LimelightConstants.angleOffset));
+ 
+    horrizontalOffsetFromTag = distenceFromTarget * Math.tan(Math.toRadians(TxValue));
+
+    SmartDashboard.putNumber("txValue", TxValue);
+    SmartDashboard.putNumber("tyValue", TyValue);
+    SmartDashboard.putNumber("distence From Target", distenceFromTarget);
+    SmartDashboard.putNumber("verticleOffsetFromTag", horrizontalOffsetFromTag);
+  } catch (Exception e) {
+    // TODO: handle exception
+  }
+
     // This method will be called once per scheduler run
   }
+  public double getVerticleDist() {
+      return horrizontalOffsetFromTag;
+    }
+  
 }

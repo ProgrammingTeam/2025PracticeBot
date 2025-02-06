@@ -25,7 +25,7 @@ SwerveDrive swerveDrive;
 
   public void drive(double x, double y, double rot) {
     // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
-    swerveDrive.driveFieldOriented(new ChassisSpeeds(y, x, rot));
+    swerveDrive.driveFieldOriented(new ChassisSpeeds(x, y, rot));
   }
 
   public void zeroGyro() {

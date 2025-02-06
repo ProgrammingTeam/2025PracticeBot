@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
+import frc.robot.commands.limelightPositionCom;
+import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.parser.SwerveParser;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -38,6 +40,8 @@ public class RobotContainer {
   
   SwerveDrive m_Swerve;
   private final SwerveSub subSwerve;
+  private final LimelightSub m_LimelightSub = new LimelightSub();
+  
  
   private final DriveCmd driveCom;
 
@@ -62,6 +66,7 @@ public class RobotContainer {
     }
     subSwerve = new SwerveSub(m_Swerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
+    
     subSwerve.setDefaultCommand(driveCom);
     // Configure the trigger bindings
     configureBindings();
@@ -82,7 +87,9 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    //leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
+    rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
