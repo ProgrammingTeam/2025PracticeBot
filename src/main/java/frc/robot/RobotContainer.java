@@ -4,6 +4,18 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Autos;
+import frc.robot.commands.DriveCmd;
+import frc.robot.commands.limelightPositionCom;
+import frc.robot.subsystems.LimelightSub;
+import frc.robot.subsystems.SwerveSub;
+import swervelib.parser.SwerveParser;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Joystick;
+import com.reduxrobotics.canand.CanandEventLoop;
+
 import java.io.File;
 
 import edu.wpi.first.math.util.Units;
@@ -33,8 +45,14 @@ import swervelib.parser.SwerveParser;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  
+  SwerveDrive m_Swerve;
+
   private final FunnelSub FunnelSubSystem = new FunnelSub();
+
   private final SwerveSub subSwerve;
+  private final LimelightSub m_LimelightSub = new LimelightSub();
+  
  
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
@@ -50,6 +68,9 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+
+    CanandEventLoop.getInstance();
+
     inCom = new IntakeCommand(FunnelSubSystem);
     disCom = new DispenserCommand(FunnelSubSystem);
 
@@ -63,6 +84,7 @@ public class RobotContainer {
     }
     subSwerve = new SwerveSub(m_Swerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
+    
     subSwerve.setDefaultCommand(driveCom);
     disCom = new DispenserCommand(FunnelSubSystem); 
     // Configure the trigger bindings
@@ -85,8 +107,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
     leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+
+    leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
+    rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
+
     m_driverController.a().whileTrue(inCom);
     m_driverController.b().whileTrue(disCom);
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is

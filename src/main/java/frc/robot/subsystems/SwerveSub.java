@@ -7,8 +7,8 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Rotation;
 
 import java.io.File;
-
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,7 +24,8 @@ SwerveDrive swerveDrive;
   }
 
   public void drive(double x, double y, double rot) {
-    swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+    // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+    swerveDrive.driveFieldOriented(new ChassisSpeeds(x, y, rot));
   }
 
   public void zeroGyro() {

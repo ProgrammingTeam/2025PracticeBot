@@ -21,9 +21,12 @@ public class Constants {
 
     public static class LimelightConstants {
 
-        public static final int[] targetHeights = null;
-        public static final int limelightHeight = 0;
+        public static final double[] targetHeights = {0, 58.5, 58.5, 51, 74.25, 74.25, 12, 66, 66, 12, 12, 12,
+                                                         58.5, 58.5, 74.25, 74.2, 51.5, 12, 12, 12 ,12 ,12 ,12};
+        public static final double limelightHeight = 44.5;
         public static final double angleOffset = 0;
+        public static final double LeftPositionOffset = 0;
+        public static final int RightPositionOffset = 0;
 
     }
 
