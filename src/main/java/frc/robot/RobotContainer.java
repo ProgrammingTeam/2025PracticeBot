@@ -10,10 +10,16 @@ import frc.robot.commands.DriveCmd;
 import frc.robot.commands.limelightPositionCom;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
+import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.reduxrobotics.canand.CanandEventLoop;
 
 import java.io.File;
@@ -53,6 +59,8 @@ public class RobotContainer {
   private final SwerveSub subSwerve;
   private final LimelightSub m_LimelightSub = new LimelightSub();
   
+  private final SendableChooser<Command> autoChooser;
+
  
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
@@ -85,8 +93,11 @@ public class RobotContainer {
     subSwerve = new SwerveSub(m_Swerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     
-    subSwerve.setDefaultCommand(driveCom);
-    disCom = new DispenserCommand(FunnelSubSystem); 
+    subSwerve.setDefaultCommand(driveCom); 
+    
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+
     // Configure the trigger bindings
     configureBindings();
   }
@@ -129,6 +140,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(); // TODO: ADD A AUTO CMD
+   return new PathPlannerAuto("Example Auto");
+ // TODO: ADD A AUTO CMD
   }
 }
