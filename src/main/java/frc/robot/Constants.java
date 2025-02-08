@@ -31,7 +31,10 @@ public class Constants {
     }
 
     public static class CANIds {
-        public static final int someMotor = 0;
+        public static final int someMotorA = 31;
+        public static final int someMotorB = 32;
+        public static final int someMotorC = 33;
+        public static final int someMotorD = 34;
     }
 
     public static class AlgeaConstants {
