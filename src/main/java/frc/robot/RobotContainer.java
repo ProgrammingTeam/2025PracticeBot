@@ -14,6 +14,10 @@ import swervelib.parser.SwerveParser;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.reduxrobotics.canand.CanandEventLoop;
 
 import java.io.File;
@@ -50,6 +54,8 @@ public class RobotContainer {
       OperatorConstants.kDriverControllerPort);
   private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.LeftJoystickPort);
   private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.RightJoystickPort);
+  private final SendableChooser<Command> autoChooser;
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -69,6 +75,9 @@ public class RobotContainer {
     
     subSwerve.setDefaultCommand(driveCom);
     // Configure the trigger bindings
+   autoChooser = AutoBuilder.buildAutoChooser();
+  SmartDashboard.putData("Auto Chooser", autoChooser);
+
     configureBindings();
   }
 
@@ -105,6 +114,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(); // TODO: ADD A AUTO CMD
+    return autoChooser.getSelected();
   }
 }
