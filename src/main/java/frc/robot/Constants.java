@@ -5,7 +5,9 @@
 package frc.robot;
 
 public class Constants {
+
     public static final double speedMultiplier = 3.81;
+
     public static final int joyX = 0;
     public static final int joyY = 1;
     public static final int joyZ = 2;
@@ -16,6 +18,7 @@ public class Constants {
         public static final int LeftJoystickPort = 1;
         public static final int RightJoystickPort = 2;
     }
+
     public static class LimelightConstants {
 
         public static final double[] targetHeights = {0, 58.5, 58.5, 51, 74.25, 74.25, 12, 66, 66, 12, 12, 12,
@@ -27,5 +30,12 @@ public class Constants {
 
     }
 
+    public static class CANIds {
+        public static final int someMotor = 0;
+    }
+
+    public static class AlgeaConstants {
+        public static final double armGearRatio = 1/4;
+    }
 
 }
