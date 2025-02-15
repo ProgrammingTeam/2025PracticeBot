@@ -6,7 +6,7 @@ package frc.robot;
 
 public class Constants {
 
-    public static final double speedMultiplier = 3.81;
+    public static final double speedMultiplier = 5;
 
     public static final int joyX = 0;
     public static final int joyY = 1;

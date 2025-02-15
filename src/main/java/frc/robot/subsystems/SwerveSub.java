@@ -29,6 +29,8 @@ public class SwerveSub extends SubsystemBase {
   /** Creates a new SwerveSub. */
   public SwerveSub(SwerveDrive swerve) {
     swerveDrive = swerve;
+    swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    swerveDrive.setCosineCompensator(false); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     RobotConfig config;
     try{
       config = RobotConfig.fromGUISettings();
@@ -63,6 +65,7 @@ public class SwerveSub extends SubsystemBase {
               return false;
             },
             this
+            
     );
   
   }
@@ -78,7 +81,7 @@ public class SwerveSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+    SmartDashboard.putNumber( "Max chassis Velocity", swerveDrive.getMaximumChassisVelocity());
     // This method will be called on  123rh ce per scheduler run
   }
   

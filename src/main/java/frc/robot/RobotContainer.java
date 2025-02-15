@@ -56,7 +56,7 @@ public class RobotContainer {
   private final FunnelSub FunnelSubSystem = new FunnelSub();
 
   private final SwerveSub subSwerve;
-  private final LimelightSub m_LimelightSub = new LimelightSub();
+  private final LimelightSub m_LimelightSub;
   
  
   private final DriveCmd driveCom;
@@ -82,7 +82,7 @@ public class RobotContainer {
     disCom = new DispenserCommand(FunnelSubSystem);
 
     try {
-      double maximumSpeed = Units.feetToMeters(4.5);
+      double maximumSpeed = 0.1;
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
       m_Swerve = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
     } catch (Exception e) {
@@ -90,6 +90,7 @@ public class RobotContainer {
       e.printStackTrace();
     }
     subSwerve = new SwerveSub(m_Swerve);
+    m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     
     subSwerve.setDefaultCommand(driveCom);

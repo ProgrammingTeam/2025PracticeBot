@@ -15,7 +15,7 @@ public class AlgaeSub extends SubsystemBase {
      SparkMax armMotor; 
      
      public Arm(){
-      armMotor = new SparkMax(0, SparkLowLevel.MotorType.kBrushless);
+      armMotor = new SparkMax(31, SparkLowLevel.MotorType.kBrushless);
      }
      public void spin(double spin){
       armMotor.set(spin);
@@ -26,7 +26,7 @@ public class AlgaeSub extends SubsystemBase {
       SparkMax rotatorMotor;
 
       public Rotater(){
-       rotatorMotor = new SparkMax(0, SparkLowLevel.MotorType.kBrushless);
+       rotatorMotor = new SparkMax(32, SparkLowLevel.MotorType.kBrushless);
       }  
       public void spin(double spin){   
       rotatorMotor.set(spin); 

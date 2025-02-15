@@ -5,71 +5,68 @@
 package frc.robot.subsystems;
 
 
+import com.reduxrobotics.sensors.canandgyro.Canandgyro;
+
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers;
 
 public class LimelightSub extends SubsystemBase {
   public double distenceFromTarget;
- // public double VerticleOffsetFromTarget;
-  private double heightDifOfLimeLightToTag;
+  SwerveDrivePoseEstimator m_poseEstimator;
+  Canandgyro m_gyro;
+  boolean doRejectUpdate;
+  boolean redAlliance;
 
-
-  private double TyValue;
-  private double TxValue;
-  private double horrizontalOffsetFromTag;
-  private long tagIDNumber;
-  private NetworkTableEntry LimeTY;
-  private NetworkTableEntry LimeTX;
-  private NetworkTableEntry LimeTid;
   
 
   // Creates a new LimelightSub.
-  public LimelightSub() {
+  public LimelightSub(SwerveSub swerveSub) {
     
-      
-   try {
-    NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    LimeTY = Limelight.getEntry("ty");
-    LimeTX = Limelight.getEntry("tx");
-    LimeTid = Limelight.getEntry("tid");
+      m_poseEstimator = swerveSub.swerveDrive.swerveDrivePoseEstimator;
+      m_gyro = (Canandgyro) swerveSub.swerveDrive.getGyro().getIMU();
 
-  } catch (Exception e) {
-    // TODO: handle exception
   }
-    }
-
 
   @Override
   public void periodic() {
-    try {
-      
-
-    TyValue = LimeTY.getDouble(0) +2;
-    TxValue = LimeTX.getDouble(0); 
-    tagIDNumber = LimeTid.getInteger(0);  
-
-    heightDifOfLimeLightToTag = Constants.LimelightConstants.targetHeights[(int)tagIDNumber] - Constants.LimelightConstants.limelightHeight;
-      distenceFromTarget = heightDifOfLimeLightToTag / 
-       Math.tan(Math.toRadians(TyValue + Constants.LimelightConstants.angleOffset));
- 
-    horrizontalOffsetFromTag = distenceFromTarget * Math.tan(Math.toRadians(TxValue));
-
-    SmartDashboard.putNumber("txValue", TxValue);
-    SmartDashboard.putNumber("tyValue", TyValue);
-    SmartDashboard.putNumber("distence From Target", distenceFromTarget);
-    SmartDashboard.putNumber("verticleOffsetFromTag", horrizontalOffsetFromTag);
-  } catch (Exception e) {
-    // TODO: handle exception
-  }
-
-    // This method will be called once per scheduler run
-  }
-  public double getVerticleDist() {
-      return horrizontalOffsetFromTag;
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+      redAlliance = true;
     }
-  
+    else {
+      redAlliance = false;
+    }
+    
+    LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+    LimelightHelpers.PoseEstimate mt2 = redAlliance ? 
+            LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight") : 
+            LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    doRejectUpdate = false;
+    if(Math.abs(m_gyro.getAngularVelocityYaw()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+    {
+      doRejectUpdate = true;
+    }
+    if(mt2.tagCount == 0)
+    {
+      doRejectUpdate = true;
+    }
+    if(!doRejectUpdate)
+    {
+      m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+      m_poseEstimator.addVisionMeasurement(
+          mt2.pose,
+          mt2.timestampSeconds);
+    }  
+
+
+  }
+    // This method will be called once per scheduler run
 }

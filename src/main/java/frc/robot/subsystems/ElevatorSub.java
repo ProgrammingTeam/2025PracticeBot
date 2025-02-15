@@ -15,10 +15,10 @@ import frc.robot.Constants;
 public class ElevatorSub extends SubsystemBase {
   //TODO: REMOVE BACK AND FRONT MOTOR LOGIC -- FIX LOGIC AND IMPLEMENT FEATURES
   /** Creates a new ElevatorSub. */
-  private SparkMax motor1 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
-  private SparkMax motor2 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
-  private SparkMax motor3 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
-  private SparkMax motor4 = new SparkMax(Constants.CANIds.someMotor, MotorType.kBrushless);
+  private SparkMax motor1 = new SparkMax(24, MotorType.kBrushless);
+  private SparkMax motor2 = new SparkMax(25, MotorType.kBrushless);
+  private SparkMax motor3 = new SparkMax(26, MotorType.kBrushless);
+  private SparkMax motor4 = new SparkMax(27, MotorType.kBrushless);
 
   public SparkAbsoluteEncoder motor1Encoder = motor1.getAbsoluteEncoder();
   public SparkAbsoluteEncoder motor3Encoder = motor3.getAbsoluteEncoder();

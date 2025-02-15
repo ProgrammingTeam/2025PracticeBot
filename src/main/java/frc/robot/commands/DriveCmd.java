@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
@@ -32,9 +33,9 @@ public class DriveCmd extends Command {
   @Override
   public void execute() {
     swerveSub.drive(
-        (Math.pow(LJoystick.getRawAxis(Constants.joyY), 1) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
-        (Math.pow(LJoystick.getRawAxis(Constants.joyX), 1) * Constants.speedMultiplier) * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
-        (Math.pow(RJoystick.getRawAxis(Constants.joyX), 1) * Constants.speedMultiplier) * (RJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
+        MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyY), 0.05) * Constants.speedMultiplier * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
+        MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyX), 0.05) * Constants.speedMultiplier * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
+        RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier * (RJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
     );
   }
 
