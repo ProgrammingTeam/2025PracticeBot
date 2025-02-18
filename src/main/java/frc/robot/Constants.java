@@ -23,8 +23,8 @@ public final class Constants {
   }
 
   public static class ElevatorConstants {
-    public static final double kP = 0.0066;
-    public static final double kI = 0;
+    public static final double kP = 0.18;
+    public static final double kI = 0.0000;
     public static final double kD = 0;
 
     public static final double kMinOutput = 0;
@@ -35,17 +35,17 @@ public final class Constants {
     public static final double allowedErr = 0;
 
     private static final double conversionFactor = 0;
-
+public static final double rotation = 69;
     public static enum ElevatorPositions {
-      L1(18),
-      L2(31),
-      L3(47),
-      L4(72),
-      corolStation(37),
+      L1(11.33333333),
+      L2(15.64),
+      L3(18),
+      L4(20.6),
+      corolStation(37.7),
       travel(0),
-     // net(4),
-      //startAlgaeLow(3),
-      //startAlgaeHigh(2),
+      // net(4),
+      // startAlgaeLow(3),
+      // startAlgaeHigh(2),
       processor(1);
 
       public final double height;

@@ -5,7 +5,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ElevatorSub;
@@ -35,14 +37,20 @@ public class ElevatorMoveButton extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ElevatorSub.move(0);
-    pid.calculate();
+    m_ElevatorSub.move(MathUtil.clamp(pid.calculate(m_ElevatorSub.EncoderValue()), -0.2, 0.2));
+    SmartDashboard.putNumber("PID P Value", pid.getP());
+    SmartDashboard.putNumber("PID I Value", pid.getI());
+    SmartDashboard.putNumber("PID D Value", pid.getD());
+    SmartDashboard.putNumber("Current PID calculation", pid.calculate(m_ElevatorSub.EncoderValue()));
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
-
+  public void end(boolean interrupted) {
+    m_ElevatorSub.move(0);
+  }
+ 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
