@@ -19,7 +19,7 @@ public class ElevatorSub extends SubsystemBase {
   private SparkMax motor2 = new SparkMax(25, MotorType.kBrushless);
   private SparkMax motor3 = new SparkMax(26, MotorType.kBrushless);
   private SparkMax motor4 = new SparkMax(27, MotorType.kBrushless);
-
+  public double elevatorDriveSpeedMultiplier;
   public SparkAbsoluteEncoder motor1Encoder = motor1.getAbsoluteEncoder();
   public SparkAbsoluteEncoder motor3Encoder = motor3.getAbsoluteEncoder();
 
@@ -43,7 +43,15 @@ public class ElevatorSub extends SubsystemBase {
   public void periodic() {
     motor1_E_Val = motor1Encoder.getPosition();
     motor3_E_Val = motor3Encoder.getPosition();
-
+    if (motor1_E_Val >= 20) {
+      elevatorDriveSpeedMultiplier = 0.5;
+    }
+    else if (motor1_E_Val >= 10) {
+      elevatorDriveSpeedMultiplier = 0.75;
+    }
+    else {
+      elevatorDriveSpeedMultiplier = 1;
+    }
     SmartDashboard.putNumber("Front distance", motor1_E_Val);
     SmartDashboard.putNumber("Back distance", motor3_E_Val);
   }

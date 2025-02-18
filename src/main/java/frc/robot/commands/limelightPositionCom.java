@@ -29,7 +29,7 @@ public class limelightPositionCom extends Command {
   @Override
   public void initialize() {
     toPosition = false;
-    m_Swerve.drive(0, 0, 0);
+    m_Swerve.driveScaled(0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,25 +37,25 @@ public class limelightPositionCom extends Command {
   public void execute() {
     if (LeftOffset) {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.LeftPositionOffset + 1) {
-        m_Swerve.drive(0.2, 0, 0);
+        m_Swerve.driveScaled(0.2, 0, 0);
       }
       else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.LeftPositionOffset - 1) {
-        m_Swerve.drive(-0.2, 0, 0);
+        m_Swerve.driveScaled(-0.2, 0, 0);
       }
       else {
-        m_Swerve.drive(0, 0, 0);
+        m_Swerve.driveScaled(0, 0, 0);
         toPosition = true;
       }
     }
     else {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.RightPositionOffset + 1) {
-        m_Swerve.drive(0.2, 0, 0);
+        m_Swerve.driveScaled(0.2, 0, 0);
       }
       else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.RightPositionOffset - 1) {
-        m_Swerve.drive(-0.2, 0, 0);
+        m_Swerve.driveScaled(-0.2, 0, 0);
       }
       else {
-        m_Swerve.drive(0, 0, 0);
+        m_Swerve.driveScaled(0, 0, 0);
         toPosition = true;
       }
     }

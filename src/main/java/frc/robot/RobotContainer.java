@@ -35,6 +35,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.parser.SwerveParser;
@@ -54,7 +55,7 @@ public class RobotContainer {
   SwerveDrive m_Swerve;
 
   private final FunnelSub FunnelSubSystem = new FunnelSub();
-
+  private final  ElevatorSub m_ElvSub = new ElevatorSub();
   private final SwerveSub subSwerve;
   private final LimelightSub m_LimelightSub;
   
@@ -89,7 +90,7 @@ public class RobotContainer {
       System.out.println("Failed");
       e.printStackTrace();
     }
-    subSwerve = new SwerveSub(m_Swerve);
+    subSwerve = new SwerveSub(m_Swerve, m_ElvSub);
     m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     

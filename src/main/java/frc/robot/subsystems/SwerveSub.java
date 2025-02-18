@@ -25,10 +25,12 @@ import swervelib.parser.SwerveParser;
 
 public class SwerveSub extends SubsystemBase {
   SwerveDrive swerveDrive;
+  ElevatorSub m_ElvSub;
 
   /** Creates a new SwerveSub. */
-  public SwerveSub(SwerveDrive swerve) {
+  public SwerveSub(SwerveDrive swerve, ElevatorSub elevatorSub) {
     swerveDrive = swerve;
+    m_ElvSub = elevatorSub;
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     RobotConfig config;
@@ -70,7 +72,14 @@ public class SwerveSub extends SubsystemBase {
   
   }
 
-  public void drive(double x, double y, double rot) {
+  public void driveScaled(double x, double y, double rot) {
+    // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+    this.driveUnscaled(x * m_ElvSub.elevatorDriveSpeedMultiplier, 
+                       y * m_ElvSub.elevatorDriveSpeedMultiplier, 
+                       rot * m_ElvSub.elevatorDriveSpeedMultiplier);
+  }
+  
+  public void driveUnscaled(double x, double y, double rot) {
     // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
     swerveDrive.driveFieldOriented(new ChassisSpeeds(x, y, rot));
   }
