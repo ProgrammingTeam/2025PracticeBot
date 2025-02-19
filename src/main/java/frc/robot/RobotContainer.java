@@ -18,8 +18,10 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
+import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
 /**
@@ -33,38 +35,43 @@ import swervelib.parser.SwerveParser;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final FunnelSub FunnelSubSystem = new FunnelSub();
-  private final SwerveSub subSwerve;
+  // SwerveDrive m_Swerve;
+  // private final FunnelSub FunnelSubSystem = new FunnelSub();
+  // private final SwerveSub subSwerve;
+  private final AlgaeSub algae;
  
-  private final DriveCmd driveCom;
-  private final IntakeCommand inCom; 
-  private final DispenserCommand disCom;
-
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController = new CommandXboxController(
-      OperatorConstants.kDriverControllerPort);
-  private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.LeftJoystickPort);
-  private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.RightJoystickPort);
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    inCom = new IntakeCommand(FunnelSubSystem);
-    disCom = new DispenserCommand(FunnelSubSystem);
-
-    try {
-      double maximumSpeed = Units.feetToMeters(4.5);
-      File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
-      m_Swerve = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
-    } catch (Exception e) {
-      System.out.println("Failed");
-      e.printStackTrace();
-    }
-    subSwerve = new SwerveSub(m_Swerve);
-    driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
-    subSwerve.setDefaultCommand(driveCom);
-    disCom = new DispenserCommand(FunnelSubSystem); 
+  // private final DriveCmd driveCom;
+  // private final IntakeCommand inCom; 
+  // private DispenserCommand disCom;
+  
+    // Replace with CommandPS4Controller or CommandJoystick if needed
+    private final CommandXboxController m_driverController = new CommandXboxController(
+        OperatorConstants.kDriverControllerPort);
+    private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.LeftJoystickPort);
+    private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.RightJoystickPort);
+  
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+      // inCom = new IntakeCommand(FunnelSubSystem);
+      // disCom = new DispenserCommand(FunnelSubSystem);
+      algae = new AlgaeSub();       
+      
+  
+      // try {
+        // double maximumSpeed = Units.feetToMeters(4.5);
+    //     File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
+    //     m_Swerve = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
+    //   } catch (Exception e) {
+    //     System.out.println("Failed");
+    //     e.printStackTrace();
+    //   }
+    //   subSwerve = new SwerveSub(m_Swerve);
+    // disCom = new DispenserCommand(FunnelSubSystem); 
+    // driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
+    // subSwerve.setDefaultCommand(driveCom);
+    
     // Configure the trigger bindings
     configureBindings();
   }
@@ -84,9 +91,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
-    m_driverController.a().whileTrue(inCom);
-    m_driverController.b().whileTrue(disCom);
+    // leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    // m_driverController.a().whileTrue(inCom);
+    // m_driverController.b().whileTrue(disCom);
+    m_driverController.x().onTrue(new InstantCommand(() -> {
+     algae.arm.setSetpoint(0);
+    }));
+    m_driverController.y().onTrue(new InstantCommand(() -> {
+      algae.arm.setSetpoint(7.5);
+    }));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is

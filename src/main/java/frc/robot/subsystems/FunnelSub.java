@@ -17,7 +17,7 @@ public class FunnelSub extends SubsystemBase {
     SparkMax intakeMotor;
 
     public Intake() {
-      intakeMotor = new SparkMax(0, SparkLowLevel.MotorType.kBrushless);
+      intakeMotor = new SparkMax(31, SparkLowLevel.MotorType.kBrushless);
     }
 
     public void forward() {
@@ -34,8 +34,8 @@ public class FunnelSub extends SubsystemBase {
     SparkMax rightMotor;
 
     public Dispenser() {
-      leftMotor = new SparkMax(1, SparkLowLevel.MotorType.kBrushless);
-      rightMotor = new SparkMax(2, SparkLowLevel.MotorType.kBrushless);
+      leftMotor = new SparkMax(32, SparkLowLevel.MotorType.kBrushless);
+      rightMotor = new SparkMax(33, SparkLowLevel.MotorType.kBrushless);
     }
 
     public void forward() {
