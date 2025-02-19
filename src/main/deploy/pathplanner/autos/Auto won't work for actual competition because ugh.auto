@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Ally barge to reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reef to coral dispenser"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral recieved"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Dispenser to reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Reef to coral dispenser pt 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Recieve coral "
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Coral Dispenser to reef pt 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score pt 3"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

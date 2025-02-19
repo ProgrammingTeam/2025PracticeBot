@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 
@@ -20,10 +21,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+
+import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
+
   /** Creates a new ElevatorSub. */
     SparkMax leftElevateMotor = new SparkMax(11, MotorType.kBrushless);
    // SparkMax rightElevateMotor = new SparkMax(12, MotorType.kBrushless);
@@ -34,10 +43,13 @@ public class ElevatorSub extends SubsystemBase {
     config.follow(11,true);
  //   rightElevateMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     
+
+
   }
 
   @Override
   public void periodic() {
+
     SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
     // This method will be called once per scheduler run
   }
@@ -47,5 +59,6 @@ public class ElevatorSub extends SubsystemBase {
   public double EncoderValue() {
       return leftEncoder.getPosition();
     
+
   }
 }
