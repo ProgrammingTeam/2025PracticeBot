@@ -4,55 +4,61 @@
 
 package frc.robot.subsystems;
 
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+
+import static edu.wpi.first.units.Units.Kilo;
+
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkBase;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
-  //TODO: REMOVE BACK AND FRONT MOTOR LOGIC -- FIX LOGIC AND IMPLEMENT FEATURES
+
   /** Creates a new ElevatorSub. */
-  private SparkMax motor1 = new SparkMax(24, MotorType.kBrushless);
-  private SparkMax motor2 = new SparkMax(25, MotorType.kBrushless);
-  private SparkMax motor3 = new SparkMax(26, MotorType.kBrushless);
-  private SparkMax motor4 = new SparkMax(27, MotorType.kBrushless);
-  public double elevatorDriveSpeedMultiplier;
-  public SparkAbsoluteEncoder motor1Encoder = motor1.getAbsoluteEncoder();
-  public SparkAbsoluteEncoder motor3Encoder = motor3.getAbsoluteEncoder();
+    SparkMax leftElevateMotor = new SparkMax(11, MotorType.kBrushless);
+   // SparkMax rightElevateMotor = new SparkMax(12, MotorType.kBrushless);
+    RelativeEncoder leftEncoder;
+  public ElevatorSub() { 
+    leftEncoder = leftElevateMotor.getEncoder();
+    SparkMaxConfig config = new SparkMaxConfig();
+    config.follow(11,true);
+ //   rightElevateMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    
 
-  private double motor1_E_Val;
-  private double motor3_E_Val;
 
-  public ElevatorSub() {
-  }
-
-  public void frontMotors(double speed) {
-    motor1.set(speed);
-    motor2.set(speed);
-  }
-
-  public void backMotors(double speed) {
-    motor3.set(speed);
-    motor4.set(speed);
   }
 
   @Override
   public void periodic() {
-    motor1_E_Val = motor1Encoder.getPosition();
-    motor3_E_Val = motor3Encoder.getPosition();
-    if (motor1_E_Val >= 20) {
-      elevatorDriveSpeedMultiplier = 0.5;
-    }
-    else if (motor1_E_Val >= 10) {
-      elevatorDriveSpeedMultiplier = 0.75;
-    }
-    else {
-      elevatorDriveSpeedMultiplier = 1;
-    }
-    SmartDashboard.putNumber("Front distance", motor1_E_Val);
-    SmartDashboard.putNumber("Back distance", motor3_E_Val);
+
+    SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
+    // This method will be called once per scheduler run
+  }
+  public void move(double elevateSpeed) {
+    leftElevateMotor.set(elevateSpeed);
+}
+  public double EncoderValue() {
+      return leftEncoder.getPosition();
+    
+
   }
 }

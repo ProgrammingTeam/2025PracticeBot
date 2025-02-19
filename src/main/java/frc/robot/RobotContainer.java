@@ -5,7 +5,14 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 import frc.robot.commands.Autos;
+
+import frc.robot.commands.ElevatorMoveButton;
+import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ElevatorSub;
+
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.limelightPositionCom;
 import frc.robot.subsystems.LimelightSub;
@@ -20,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.reduxrobotics.canand.CanandEventLoop;
+
 
 import java.io.File;
 
@@ -50,8 +58,7 @@ import swervelib.parser.SwerveParser;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  
+
   SwerveDrive m_Swerve;
 
   private final FunnelSub FunnelSubSystem = new FunnelSub();
@@ -63,6 +70,7 @@ public class RobotContainer {
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
   private DispenserCommand disCom;
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
@@ -127,6 +135,23 @@ public class RobotContainer {
     m_driverController.b().whileTrue(disCom);
 
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+
+    
+    new Trigger(m_exampleSubsystem::exampleCondition)
+        .onTrue(new ExampleCommand(m_exampleSubsystem));
+        m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L1));
+        m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L2));
+        m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L3));
+        m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.L4));
+        m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.corolStation));
+        m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.travel));
+
+        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
+        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
+       // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.processor));
+    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is
     // pressed,
