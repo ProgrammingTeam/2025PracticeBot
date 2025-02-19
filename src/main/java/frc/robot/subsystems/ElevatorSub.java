@@ -34,13 +34,14 @@ import frc.robot.Constants;
 public class ElevatorSub extends SubsystemBase {
 
   /** Creates a new ElevatorSub. */
-    SparkMax leftElevateMotor = new SparkMax(11, MotorType.kBrushless);
-   // SparkMax rightElevateMotor = new SparkMax(12, MotorType.kBrushless);
+    SparkMax leftElevateMotor = new SparkMax(21, MotorType.kBrushless);
+    SparkMax rightElevateMotor = new SparkMax(22, MotorType.kBrushless);
     RelativeEncoder leftEncoder;
+    public double elevatorDriveSpeedMultiplier;
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig config = new SparkMaxConfig();
-    config.follow(11,true);
+    config.follow(21,true);
  //   rightElevateMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     
 
@@ -49,8 +50,7 @@ public class ElevatorSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
+   SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
     // This method will be called once per scheduler run
   }
   public void move(double elevateSpeed) {

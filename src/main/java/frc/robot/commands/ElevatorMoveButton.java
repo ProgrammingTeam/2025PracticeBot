@@ -32,11 +32,27 @@ public class ElevatorMoveButton extends Command {
   public void initialize() {
     m_ElevatorSub.move(0);
     pid.setSetpoint(m_Position.height);
+    switch (m_Position) {
+      case L1: m_ElevatorSub.elevatorDriveSpeedMultiplier = 0.4;
+        break;
+      case L2: m_ElevatorSub.elevatorDriveSpeedMultiplier = 0.3;
+        break;
+      case L3: m_ElevatorSub.elevatorDriveSpeedMultiplier = 0.2;
+        break;
+      case L4: m_ElevatorSub.elevatorDriveSpeedMultiplier = 0.1;
+        break;
+      case corolStation: m_ElevatorSub.elevatorDriveSpeedMultiplier = 0.5;
+        break;
+      case travel: default:
+        m_ElevatorSub.elevatorDriveSpeedMultiplier = 1;
+        break;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
     m_ElevatorSub.move(MathUtil.clamp(pid.calculate(m_ElevatorSub.EncoderValue()), -0.2, 0.2));
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
