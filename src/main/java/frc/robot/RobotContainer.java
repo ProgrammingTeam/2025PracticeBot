@@ -66,7 +66,7 @@ public class RobotContainer {
   
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
-  private DispenserCommand disCom;
+  private final DispenserCommand disCom;
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -100,7 +100,6 @@ public class RobotContainer {
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     
     subSwerve.setDefaultCommand(driveCom);
-    disCom = new DispenserCommand(FunnelSubSystem); 
     // Configure the trigger bindings
    autoChooser = AutoBuilder.buildAutoChooser();
   SmartDashboard.putData("Auto Chooser", autoChooser);
