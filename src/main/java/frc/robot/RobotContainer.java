@@ -42,8 +42,10 @@ import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.ElevatorSub;
+import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
+import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
 /**
@@ -122,13 +124,19 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    // leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
 
     leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
     rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
 
-    m_driverController.a().whileTrue(inCom);
-    m_driverController.b().whileTrue(disCom);
+    // m_driverController.a().whileTrue(inCom);
+    // m_driverController.b().whileTrue(disCom);
+    m_driverController.x().onTrue(new InstantCommand(() -> {
+     algae.arm.setSetpoint(0);
+    }));
+    m_driverController.y().onTrue(new InstantCommand(() -> {
+      algae.arm.setSetpoint(7.5);
+    }));
 
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
