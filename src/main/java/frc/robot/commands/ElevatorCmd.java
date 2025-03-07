@@ -5,36 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.FunnelSub;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.ElevatorSub;
 
-public class IntakeCommand extends Command {
-  FunnelSub m_FunnelSub;
-
-  /** Creates a new FunnelCommand. */
-  public IntakeCommand(FunnelSub subFunnel) {
-    m_FunnelSub = subFunnel;
-    addRequirements(m_FunnelSub);
+/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+public class ElevatorCmd extends Command {
+  ElevatorSub M_Elvsub;
+  CommandXboxController M_xboxController;
+  /** Creates a new ElevatorCmd. */
+  public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController) {
+    M_Elvsub = Elvsub;
+    M_xboxController = xboxController;
+    addRequirements(Elvsub); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_FunnelSub.intake.stop();
+    M_Elvsub.move(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_FunnelSub.intake.forward();
-
+    M_Elvsub.move(M_xboxController.getLeftY() * 0.05);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_FunnelSub.intake.stop();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
