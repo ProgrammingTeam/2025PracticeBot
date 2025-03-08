@@ -29,6 +29,7 @@ public class ElevatorSub extends SubsystemBase {
       leftEncoder = leftElevateMotor.getEncoder();
       SparkMaxConfig config = new SparkMaxConfig();
       config.follow(21,true);
+      pid.setTolerance(1);
  //   rightElevateMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     
 
@@ -37,21 +38,23 @@ public class ElevatorSub extends SubsystemBase {
   public void changePosition(ElevatorPositions position){
     m_Position = position;
     pid.setSetpoint(m_Position.height);
-        switch (m_Position) {
-          case L1: elevatorDriveSpeedMultiplier = 0.4;
-        break;
-      case L2: elevatorDriveSpeedMultiplier = 0.3;
-        break;
-      case L3: elevatorDriveSpeedMultiplier = 0.2;
-        break;
-      case L4: elevatorDriveSpeedMultiplier = 0.1;
-        break;
-      case corolStation: elevatorDriveSpeedMultiplier = 0.5;
-        break;
-      case travel: default:
-        elevatorDriveSpeedMultiplier = 1;
-        break;
-      }
+    if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.1;
+    }
+    else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.2;
+    }
+    else if ((ElevatorPositions.L2.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.3;
+    }
+    else if ((ElevatorPositions.L1.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.4;
+    }
+    else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 1;
+    }
+    else {elevatorDriveSpeedMultiplier = 1;
+    }
   }
  
     
@@ -60,7 +63,7 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
    SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
-  move(MathUtil.clamp(pid.calculate(EncoderValue()), -0.2, 0.2));
+  move(MathUtil.clamp(pid.calculate(EncoderValue()), -1, 1));
   SmartDashboard.putNumber("PID P Value", pid.getP());
   SmartDashboard.putNumber("PID I Value", pid.getI());
   SmartDashboard.putNumber("PID D Value", pid.getD());
@@ -72,8 +75,9 @@ public class ElevatorSub extends SubsystemBase {
 }
   public double EncoderValue() {
       return leftEncoder.getPosition();
-    
-
   }
   
+  public boolean atPidSetpoint() {
+    return pid.atSetpoint();
+  }
 }

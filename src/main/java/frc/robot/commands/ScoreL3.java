@@ -22,9 +22,9 @@ public class ScoreL3 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     // alex was here
-    addCommands(new ParallelRaceGroup (new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3), new WaitCommand(3)));
+    addCommands(new ParallelRaceGroup (new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3), new WaitCommand(3)));
     addCommands(new ParallelRaceGroup (new DispenserCommand(SubFunnel), new WaitCommand(4)));
-    addCommands(new ParallelRaceGroup(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
+    addCommands(new ParallelRaceGroup(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
     
   }
 }

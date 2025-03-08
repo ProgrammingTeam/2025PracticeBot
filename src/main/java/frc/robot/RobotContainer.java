@@ -6,9 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
+import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.Autos;
-
-import frc.robot.commands.ElevatorMoveButton;
 import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
@@ -133,17 +132,17 @@ public class RobotContainer {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     
-        m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
-        m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
-        m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3));
-        m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L4));
-        m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
-        m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
+        m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L1));
+        m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L2));
+        m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3));
+        m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
+        m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
+        m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel));
 
         //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
         //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
        // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
-        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.processor));
+        m_driverController.a().and(m_driverController.pov(180)).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.processor));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
 
 
