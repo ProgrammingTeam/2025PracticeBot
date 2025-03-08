@@ -35,7 +35,7 @@ public class DriveCmd extends Command {
     swerveSub.driveScaled(
         MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyY), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
         MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyX), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
-        RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier * (RJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
+        RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
     );
   }
 

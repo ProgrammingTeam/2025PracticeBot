@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ElevatorSub;
 
@@ -12,10 +13,12 @@ import frc.robot.subsystems.ElevatorSub;
 public class ElevatorCmd extends Command {
   ElevatorSub M_Elvsub;
   CommandXboxController M_xboxController;
+  CommandJoystick m_Joystick;
   /** Creates a new ElevatorCmd. */
-  public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController) {
+  public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController, CommandJoystick joystick) {
     M_Elvsub = Elvsub;
     M_xboxController = xboxController;
+    m_Joystick = joystick;
     addRequirements(Elvsub); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -29,7 +32,7 @@ public class ElevatorCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    M_Elvsub.move(M_xboxController.getLeftY() * 0.05);
+    M_Elvsub.move(M_xboxController.getLeftY() * m_Joystick.getRawAxis(3));
   }
 
   // Called once the command ends or is interrupted.
