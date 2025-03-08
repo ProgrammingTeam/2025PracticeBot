@@ -1,0 +1,73 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R Ally To FR Reef"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Reef to coral dispenser"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Coral Dispenser to reef pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Copy of Coral Dispenser to reef pt 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Reef to coral dispenser pt 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Recieve coral "
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score pt 3"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

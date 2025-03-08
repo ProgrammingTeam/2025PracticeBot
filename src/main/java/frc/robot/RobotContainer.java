@@ -5,16 +5,12 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.limelightPositionCom;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,22 +18,16 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.reduxrobotics.canand.CanandEventLoop;
 
 import java.io.File;
-
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
+
 import frc.robot.commands.DispenserCommand;
-import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.FunnelSub;
-import frc.robot.subsystems.SwerveSub;
-import swervelib.parser.SwerveParser;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -51,7 +41,7 @@ import swervelib.parser.SwerveParser;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
-  SwerveDrive m_Swerve;
+  private SwerveDrive m_Swerve;
 
   private final FunnelSub FunnelSubSystem = new FunnelSub();
 

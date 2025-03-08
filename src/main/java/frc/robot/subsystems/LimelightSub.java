@@ -37,7 +37,7 @@ public class LimelightSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    var alliance = DriverStation.getAlliance();
+  /*   var alliance = DriverStation.getAlliance();
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
       redAlliance = true;
     }
@@ -46,9 +46,7 @@ public class LimelightSub extends SubsystemBase {
     }
     
     LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-    LimelightHelpers.PoseEstimate mt2 = redAlliance ? 
-            LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight") : 
-            LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("main limelight");
     doRejectUpdate = false;
     if(Math.abs(m_gyro.getAngularVelocityYaw()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
     {
@@ -66,7 +64,7 @@ public class LimelightSub extends SubsystemBase {
           mt2.timestampSeconds);
     }  
 
-
+*/
   }
     // This method will be called once per scheduler run
 }

@@ -7,15 +7,22 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Rotation;
 
 import java.io.File;
+import java.util.Optional;
+
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,9 +32,17 @@ import swervelib.parser.SwerveParser;
 
 public class SwerveSub extends SubsystemBase {
   SwerveDrive swerveDrive;
+  Pose3d poseA = new Pose3d();
+  Pose3d poseB = new Pose3d();
 
+  StructPublisher<Pose3d> publisher = NetworkTableInstance.getDefault()
+    .getStructTopic("MyPose", Pose3d.struct).publish();
+  StructArrayPublisher<Pose3d> arrayPublisher = NetworkTableInstance.getDefault()
+    .getStructArrayTopic("MyPoseArray", Pose3d.struct).publish();
   /** Creates a new SwerveSub. */
   public SwerveSub(SwerveDrive swerve) {
+
+
     swerveDrive = swerve;
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
@@ -83,6 +98,13 @@ public class SwerveSub extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber( "Max chassis Velocity", swerveDrive.getMaximumChassisVelocity());
     // This method will be called on  123rh ce per scheduler run
+    publisher.set(poseA);
+    arrayPublisher.set(new Pose3d[] {poseA, poseB});
+  }
+
+  public Optional<SwerveDriveSimulation> getMapleSimDrive()
+  {
+    return swerveDrive.getMapleSimDrive();
   }
   
 }
