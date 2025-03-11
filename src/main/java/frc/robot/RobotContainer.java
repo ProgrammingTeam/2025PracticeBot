@@ -41,6 +41,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.RotatorFwdCmd;
+import frc.robot.commands.RotatorBwdCmd;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.FunnelSub;
@@ -60,7 +62,7 @@ import swervelib.parser.SwerveParser;
 public class RobotContainer {
 
   SwerveDrive m_Swerve;
-
+  private final AlgaeSub algae = new AlgaeSub();
   private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
   private final SwerveSub subSwerve;
@@ -69,6 +71,8 @@ public class RobotContainer {
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
   private final DispenserCommand disCom;
+  private final RotatorFwdCmd fwdCom;
+  private final RotatorBwdCmd bwdCom;
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -85,10 +89,11 @@ public class RobotContainer {
   public RobotContainer() {
 
     CanandEventLoop.getInstance();
-
+   
     inCom = new IntakeCommand(FunnelSubSystem);
     disCom = new DispenserCommand(FunnelSubSystem);
-
+    fwdCom = new RotatorFwdCmd(algae);
+    bwdCom = new RotatorBwdCmd(algae);
     try {
       double maximumSpeed = 0.1;
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -124,34 +129,33 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
-
+    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
     leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
     rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
 
-    // m_driverController.a().whileTrue(inCom);
-    // m_driverController.b().whileTrue(disCom);
-    m_driverController.x().onTrue(new InstantCommand(() -> {
-     algae.arm.setSetpoint(0);
-    }));
-    m_driverController.y().onTrue(new InstantCommand(() -> {
-      algae.arm.setSetpoint(7.5);
-    }));
+    m_driverController.leftBumper().and(m_driverController.pov(180)).whileTrue(inCom);
+    m_driverController.rightBumper().and(m_driverController.pov(180)).whileTrue(disCom);
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-
+    m_driverController.a().and(m_driverController.pov(180)).onTrue(new InstantCommand(() -> {
+     algae.arm.setSetpoint(0);}));
+    m_driverController.y().and(m_driverController.pov(180)).onTrue(new InstantCommand(() -> {
+      algae.arm.setSetpoint(7.5);}));
+    m_driverController.b().and(m_driverController.pov(180)).whileTrue(new RotatorFwdCmd(algae));
+    m_driverController.x().and(m_driverController.pov(180)).whileTrue(new RotatorBwdCmd(algae));
     
-        m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
-        m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
-        m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3));
-        m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L4));
-        m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
-        m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
-
-        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
-        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
-       // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
-        m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.processor));
+    m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
+    m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
+    m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3));
+    m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L4));
+    
+    m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
+    m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
+    m_driverController.leftTrigger().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.processor));
+        
+    //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
+    //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
+    // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
+        
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
 
 
