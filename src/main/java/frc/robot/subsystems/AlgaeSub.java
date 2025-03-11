@@ -54,7 +54,7 @@ public class AlgaeSub extends SubsystemBase {
     SparkMax rotatorMotor;
 
     public Rotater() {
-      rotatorMotor = new SparkMax(0, SparkLowLevel.MotorType.kBrushless);
+      rotatorMotor = new SparkMax(42, SparkLowLevel.MotorType.kBrushless);
     }
 
     public void spin(double spin) {
