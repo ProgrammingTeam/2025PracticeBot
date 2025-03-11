@@ -6,9 +6,8 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
+import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.Autos;
-
-import frc.robot.commands.ElevatorMoveButton;
 import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;

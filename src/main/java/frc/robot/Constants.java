@@ -85,6 +85,8 @@ public static final double rotation = 69;
 
     public static class AlgeaConstants {
         public static final double Kp = 0.3; //Motor rotations per rotation of the arm
+        public static final double armGearRatio = 1/4;
+        public static final double Kp = 12;
     }
 
 }
