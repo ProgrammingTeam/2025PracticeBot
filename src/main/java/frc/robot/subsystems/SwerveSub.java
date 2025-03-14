@@ -22,13 +22,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
+// The subsystem class
 public class SwerveSub extends SubsystemBase {
 SwerveDrive swerveDrive;
 
-  /** Creates a new SwerveSub. */
+  // The swerveSub constructor to init
   public SwerveSub(SwerveDrive swerve) {
     swerveDrive = swerve;
     RobotConfig config;
+    
     try{
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
@@ -36,6 +38,7 @@ SwerveDrive swerveDrive;
       e.printStackTrace();
       config = null;
     }
+    
     AutoBuilder.configure(
       swerveDrive::getPose, // Robot pose supplier
       swerveDrive::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -58,11 +61,11 @@ SwerveDrive swerveDrive;
               return false;
             }
     );
-  
   }
 
   public void drive(double x, double y, double rot) {
     // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+    // Controls the motors via the drive method called externally
     swerveDrive.driveFieldOriented(new ChassisSpeeds(x, y, rot));
   }
 
@@ -72,8 +75,6 @@ SwerveDrive swerveDrive;
 
   @Override
   public void periodic() {
-    
-    // This method will be called on  123rh ce per scheduler run
+   // Called periodically -- every scheduler run
   }
-  
 }
