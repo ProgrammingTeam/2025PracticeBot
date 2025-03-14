@@ -14,10 +14,9 @@ import frc.robot.Constants;
 
 public class LimelightSub extends SubsystemBase {
   public double distenceFromTarget;
- // public double VerticleOffsetFromTarget;
+  //public double VerticleOffsetFromTarget;
   private double heightDifOfLimeLightToTag;
-
-
+  
   private double TyValue;
   private double TxValue;
   private double horrizontalOffsetFromTag;
@@ -26,50 +25,46 @@ public class LimelightSub extends SubsystemBase {
   private NetworkTableEntry LimeTX;
   private NetworkTableEntry LimeTid;
   
-
-  // Creates a new LimelightSub.
+  // Constructor for Limelight sub
   public LimelightSub() {
-    
-      
-   try {
-    NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
-    LimeTY = Limelight.getEntry("ty");
-    LimeTX = Limelight.getEntry("tx");
-    LimeTid = Limelight.getEntry("tid");
+    try {
+      NetworkTable Limelight = NetworkTableInstance.getDefault().getTable("limelight");
+      LimeTY = Limelight.getEntry("ty");
+      LimeTX = Limelight.getEntry("tx");
+      LimeTid = Limelight.getEntry("tid");
 
-  } catch (Exception e) {
-    // TODO: handle exception
-  }
+    } catch (Exception e) {
+      // TODO: handle exception
+      System.out.println("Limelight has failed init.");
+      e.printStackTrace();
     }
-
+  }
 
   @Override
   public void periodic() {
     try {
       
 
-    TyValue = LimeTY.getDouble(0) +2;
-    TxValue = LimeTX.getDouble(0); 
-    tagIDNumber = LimeTid.getInteger(0);  
+      TyValue = LimeTY.getDouble(0) +2;
+      TxValue = LimeTX.getDouble(0); 
+      tagIDNumber = LimeTid.getInteger(0);  
 
-    heightDifOfLimeLightToTag = Constants.LimelightConstants.targetHeights[(int)tagIDNumber] - Constants.LimelightConstants.limelightHeight;
+      heightDifOfLimeLightToTag = Constants.LimelightConstants.targetHeights[(int)tagIDNumber] - Constants.LimelightConstants.limelightHeight;
       distenceFromTarget = heightDifOfLimeLightToTag / 
        Math.tan(Math.toRadians(TyValue + Constants.LimelightConstants.angleOffset));
  
-    horrizontalOffsetFromTag = distenceFromTarget * Math.tan(Math.toRadians(TxValue));
+      horrizontalOffsetFromTag = distenceFromTarget * Math.tan(Math.toRadians(TxValue));
 
-    SmartDashboard.putNumber("txValue", TxValue);
-    SmartDashboard.putNumber("tyValue", TyValue);
-    SmartDashboard.putNumber("distence From Target", distenceFromTarget);
-    SmartDashboard.putNumber("verticleOffsetFromTag", horrizontalOffsetFromTag);
-  } catch (Exception e) {
+      SmartDashboard.putNumber("txValue", TxValue);
+      SmartDashboard.putNumber("tyValue", TyValue);
+      SmartDashboard.putNumber("distence From Target", distenceFromTarget);
+      SmartDashboard.putNumber("verticleOffsetFromTag", horrizontalOffsetFromTag);
+    } catch (Exception e) {
     // TODO: handle exception
+    }
   }
-
-    // This method will be called once per scheduler run
-  }
+  
   public double getVerticleDist() {
       return horrizontalOffsetFromTag;
     }
-  
 }
