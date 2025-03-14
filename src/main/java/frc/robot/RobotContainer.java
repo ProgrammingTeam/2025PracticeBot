@@ -40,17 +40,9 @@ import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.parser.SwerveParser;
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+// Main file that constructs the robot, and handles configuration.
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  // Subsystems and commands defined in this class
   
   SwerveDrive m_Swerve;
 
@@ -66,17 +58,14 @@ public class RobotContainer {
   private final IntakeCommand inCom; 
   private final DispenserCommand disCom;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
   private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.LeftJoystickPort);
   private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.RightJoystickPort);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  // Container -- Constructor
   public RobotContainer() {
-
+    // Constructs event loop, cmds, and subs
     CanandEventLoop.getInstance();
 
     inCom = new IntakeCommand(FunnelSubSystem);
@@ -90,6 +79,7 @@ public class RobotContainer {
       System.out.println("Failed");
       e.printStackTrace();
     }
+    
     subSwerve = new SwerveSub(m_Swerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     
@@ -102,20 +92,7 @@ public class RobotContainer {
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
+  // Configures/Constructs the binds for external control -- joystick
   private void configureBindings() {
     leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
 
@@ -125,22 +102,14 @@ public class RobotContainer {
     m_driverController.a().whileTrue(inCom);
     m_driverController.b().whileTrue(disCom);
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
+    // Example use of xbox controller
     // m_driverController.b().whileTrue();
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+  // Command to init the autonomous cmd
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-   return new PathPlannerAuto("Example Auto");
- // TODO: ADD A AUTO CMD
+    // Returns the auto cmd to the caller in Main.java
+    return new PathPlannerAuto("Example Auto");
+    // TODO: ADD A AUTO CMD
   }
 }
