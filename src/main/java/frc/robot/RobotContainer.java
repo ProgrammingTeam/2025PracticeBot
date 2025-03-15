@@ -7,9 +7,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
+import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.Autos;
-
-import frc.robot.commands.ElevatorMoveButton;
 import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
@@ -45,6 +44,8 @@ import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ScoreL3;
+import frc.robot.commands.RotatorFwdCmd;
+import frc.robot.commands.RotatorBwdCmd;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.AlgaeSub;
 import frc.robot.subsystems.FunnelSub;
@@ -64,17 +65,19 @@ import swervelib.parser.SwerveParser;
 public class RobotContainer {
 
   SwerveDrive m_Swerve;
-
+  private final AlgaeSub algae = new AlgaeSub();
   private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
   private final SwerveSub subSwerve;
   private final LimelightSub m_LimelightSub;
-  private final AlgaeSub algae = new AlgaeSub();
+  
 
   private final ElevatorCmd m_ElevatorCmd;
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
   private final DispenserCommand disCom;
+  private final RotatorFwdCmd fwdCom;
+  private final RotatorBwdCmd bwdCom;
 
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -92,7 +95,8 @@ public class RobotContainer {
     m_ElevatorCmd = new ElevatorCmd(m_ElvSub, m_driverController, rightJoystick);
     inCom = new IntakeCommand(FunnelSubSystem);
     disCom = new DispenserCommand(FunnelSubSystem);
-
+    fwdCom = new RotatorFwdCmd(algae);
+    bwdCom = new RotatorBwdCmd(algae);
     try {
       double maximumSpeed = 0.1;
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");

@@ -18,14 +18,32 @@ public class ScoreL1 extends SequentialCommandGroup {
 
   /** Creates a new scoreL1. */
 
-  public ScoreL1(ElevatorSub m_ElvSub, FunnelSub SubFunnel) {
+  ScoreL1(ElevatorSub m_ElvSub, FunnelSub SubFunnel) {
+<<<<<<< HEAD
+    addCommands(
+      new ParallelRaceGroup(
+        new WaitCommand(3),
+        new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1)
+      ),
+      new ParallelRaceGroup(
+        new WaitCommand(3),
+        new DispenserCommand(SubFunnel) 
+      ),
+      new ParallelRaceGroup(
+        new WaitCommand(3),
+        new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel)
+      )
+    );
+  }
+=======
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     // alex was here
-    addCommands(new ParallelRaceGroup (new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1), new WaitCommand(3)));
+    addCommands(new ParallelRaceGroup (new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L1), new WaitCommand(3)));
     addCommands(new ParallelRaceGroup (new DispenserCommand(SubFunnel), new WaitCommand(4)));
-    addCommands(new ParallelRaceGroup (new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
+    addCommands(new ParallelRaceGroup(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
+>>>>>>> origin/elevator
   }
 
-}
+

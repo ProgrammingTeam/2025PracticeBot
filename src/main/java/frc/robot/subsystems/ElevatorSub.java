@@ -6,34 +6,22 @@
 package frc.robot.subsystems;
 
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkBase.PersistMode;
-
-import static edu.wpi.first.units.Units.Kilo;
-
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-
-import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 
 public class ElevatorSub extends SubsystemBase {
-
+  private final PIDController pid = new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+  private ElevatorPositions m_Position;
   /** Creates a new ElevatorSub. */
     SparkMax leftElevateMotor = new SparkMax(21, MotorType.kBrushless);
     SparkMax rightElevateMotor = new SparkMax(22, MotorType.kBrushless);
@@ -53,9 +41,40 @@ public class ElevatorSub extends SubsystemBase {
     rightElevateMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
+  
+  public void changePosition(ElevatorPositions position){
+    m_Position = position;
+    pid.setSetpoint(m_Position.height);
+    if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.1;
+    }
+    else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.2;
+    }
+    else if ((ElevatorPositions.L2.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.3;
+    }
+    else if ((ElevatorPositions.L1.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 0.4;
+    }
+    else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
+      elevatorDriveSpeedMultiplier = 1;
+    }
+    else {elevatorDriveSpeedMultiplier = 1;
+    }
+  }
+ 
+    
+ 
+
   @Override
   public void periodic() {
    SmartDashboard.putNumber("encoder Position", leftEncoder.getPosition());
+  move(MathUtil.clamp(pid.calculate(EncoderValue()), -1, 1));
+  SmartDashboard.putNumber("PID P Value", pid.getP());
+  SmartDashboard.putNumber("PID I Value", pid.getI());
+  SmartDashboard.putNumber("PID D Value", pid.getD());
+  SmartDashboard.putNumber("Current PID calculation", pid.calculate(EncoderValue()));
     // This method will be called once per scheduler run
   }
   public void move(double elevateSpeed) {
@@ -65,4 +84,7 @@ public class ElevatorSub extends SubsystemBase {
       return leftEncoder.getPosition();
   }
   
+  public boolean atPidSetpoint() {
+    return pid.atSetpoint();
+  }
 }
