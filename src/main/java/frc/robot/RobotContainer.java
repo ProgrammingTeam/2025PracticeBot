@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+import edu.wpi.first.wpilibj2.command.button.CommandPS4Controller;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
@@ -13,7 +14,7 @@ import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ElevatorCmd;
-import frc.robot.commands.limelightPositionCom;
+import frc.robot.commands.LimelightPositionCom;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
@@ -75,7 +76,6 @@ public class RobotContainer {
   private final IntakeCommand inCom; 
   private final DispenserCommand disCom;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
   private final CommandJoystick leftJoystick = new CommandJoystick(OperatorConstants.LeftJoystickPort);
@@ -105,8 +105,7 @@ public class RobotContainer {
     m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     m_ElvSub.setDefaultCommand(m_ElevatorCmd);
-      // subSwerve.setDefaultCommand(driveCom);
-    // Configure the trigger bindings
+    // subSwerve.setDefaultCommand(driveCom);
    autoChooser = AutoBuilder.buildAutoChooser();
   SmartDashboard.putData("Auto Chooser", autoChooser);
 
@@ -156,21 +155,13 @@ public class RobotContainer {
       //  m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
       //  m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3));
       //  m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L4));
-        // m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
-        // m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
+      // m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
+      // m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
 
-        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
-        //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
-       // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
-        // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.processor));
- 
- 
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is
-    // pressed,
-    // cancelling on release.
+      //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.net));
+      //m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeLow));
+      // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElevatorSub, ElevatorPositions.startAlgaeHigh));
+      // m_driverController.a().and(m_driverController.pov(180)).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.processor));
     // m_driverController.b().whileTrue();
   }
 

@@ -10,13 +10,13 @@ import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class limelightPositionCom extends Command {
+public class LimelightPositionCom extends Command {
   private final LimelightSub m_LimelightSub;
   private final SwerveSub m_Swerve;
   private final boolean LeftOffset;
   boolean toPosition;
   /** Creates a new limlightPositionCom. */
-  public limelightPositionCom(LimelightSub LimeSub, SwerveSub SwerveSub, boolean leftDirectionalOffset) {
+  public LimelightPositionCom(LimelightSub LimeSub, SwerveSub SwerveSub, boolean leftDirectionalOffset) {
     m_LimelightSub = LimeSub;
     m_Swerve = SwerveSub;
     LeftOffset = leftDirectionalOffset;

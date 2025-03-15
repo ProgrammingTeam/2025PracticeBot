@@ -36,9 +36,7 @@ public final class Constants {
     public static final double maxVel = 0;
     public static final double maxAccel = 0;
     public static final double allowedErr = 0;
-
-    private static final double conversionFactor = 0;
-public static final double rotation = 69;
+    
     public static enum ElevatorPositions {
       L1(11.33333333),
       L2(15.64),

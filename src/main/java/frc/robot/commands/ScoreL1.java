@@ -18,23 +18,14 @@ public class ScoreL1 extends SequentialCommandGroup {
 
   /** Creates a new scoreL1. */
 
-  ScoreL1(ElevatorSub m_ElvSub, FunnelSub SubFunnel) {
+  public ScoreL1(ElevatorSub m_ElvSub, FunnelSub SubFunnel) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     // alex was here
     addCommands(new ParallelRaceGroup (new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1), new WaitCommand(3)));
     addCommands(new ParallelRaceGroup (new DispenserCommand(SubFunnel), new WaitCommand(4)));
-    addCommands(new ParallelRaceGroup(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
-  }
-
-  public void ScoreL1(ElevatorSub m_ElvSub, FunnelSub funnelSub) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
-    // alex was here
-    // i am sigma
-    // christian yelich looks like a walnut
-    // I mean whoever said that isn't wrong he does kinda look like a walnut but there had to be a nicer way to say that
+    addCommands(new ParallelRaceGroup (new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
   }
 
 }

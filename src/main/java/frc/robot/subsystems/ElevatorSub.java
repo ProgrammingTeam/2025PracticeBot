@@ -41,9 +41,16 @@ public class ElevatorSub extends SubsystemBase {
     public double elevatorDriveSpeedMultiplier;
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
-    SparkMaxConfig config = new SparkMaxConfig();
-    config.follow(21,false);
-    rightElevateMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    SparkMaxConfig configL = new SparkMaxConfig();
+
+    // when inverted, positive percent output drives the elevator upward
+    configL.inverted(true);
+
+    SparkMaxConfig configR = new SparkMaxConfig();
+    configR.follow(21,false);
+
+    leftElevateMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+    rightElevateMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
   @Override
@@ -56,8 +63,6 @@ public class ElevatorSub extends SubsystemBase {
 }
   public double EncoderValue() {
       return leftEncoder.getPosition();
-    
-
   }
   
 }
