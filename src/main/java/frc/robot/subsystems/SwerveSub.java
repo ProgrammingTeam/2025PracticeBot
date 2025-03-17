@@ -23,24 +23,28 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
+// Class t=of SwerveSub
 public class SwerveSub extends SubsystemBase {
   SwerveDrive swerveDrive;
   ElevatorSub m_ElvSub;
 
-  /** Creates a new SwerveSub. */
+  // Constructor for SwerveSub
   public SwerveSub(SwerveDrive swerve, ElevatorSub elevatorSub) {
     swerveDrive = swerve;
     m_ElvSub = elevatorSub;
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     RobotConfig config;
-    try{
+    
+    try {
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       config = null;
       // Handle exception as needed
       e.printStackTrace();
     }
+
+    // Pose builder configuration
     AutoBuilder.configure(
       swerveDrive::getPose, // Robot pose supplier
       swerveDrive::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -56,10 +60,9 @@ public class SwerveSub extends SubsystemBase {
             ),
             config, // The robot configuration
             () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
               // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
+              // PATH WILL BE MIRRORED TO THE OPPOSITE SIDE, ORIGIN WILL REMAIN ON BLUE SIDE
+              // Gets the current alliance
               var alliance = DriverStation.getAlliance();
               if (alliance.isPresent()) {
                 return alliance.get() == DriverStation.Alliance.Red;
@@ -67,24 +70,24 @@ public class SwerveSub extends SubsystemBase {
               return false;
             },
             this
-            
     );
-  
   }
 
-  public void driveScaled(double x, double y, double rot) {
-    // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
+  // Drive method but scaled
+  public void driveScaled(double x, double y, double rot) {    
     // alex was here 2/18/2025
+    // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
     this.driveUnscaled(x * m_ElvSub.elevatorDriveSpeedMultiplier, 
                        y * m_ElvSub.elevatorDriveSpeedMultiplier, 
                        rot * m_ElvSub.elevatorDriveSpeedMultiplier);
   }
-  
+
+  // Drive method but scaled
   public void driveUnscaled(double x, double y, double rot) {
     // swerveDrive.drive(new Translation2d(y, x), rot, true, false);
     swerveDrive.driveFieldOriented(new ChassisSpeeds(x, y, rot));
   }
-
+  // Resets the gyro
   public void zeroGyro() {
     swerveDrive.zeroGyro();
   }
@@ -92,7 +95,5 @@ public class SwerveSub extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber( "Max chassis Velocity", swerveDrive.getMaximumChassisVelocity());
-    // This method will be called on  123rh ce per scheduler run
   }
-  
 }
