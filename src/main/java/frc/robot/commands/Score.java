@@ -14,17 +14,17 @@ import frc.robot.subsystems.FunnelSub;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreL3 extends SequentialCommandGroup {
+public class Score extends SequentialCommandGroup {
 
   /** Creates a new scoreL1. */
-  public ScoreL3(ElevatorSub m_ElvSub, FunnelSub SubFunnel) {
+  public Score(ElevatorSub m_ElvSub, FunnelSub SubFunnel, ElevatorPositions elevatorPosition) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    // alex was here
-    addCommands(new ParallelRaceGroup (new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3), new WaitCommand(3)));
+    // alex was here and so was Loki
+    addCommands(new ParallelRaceGroup (new AutoElevatorCmd(m_ElvSub, elevatorPosition)));
     addCommands(new ParallelRaceGroup (new DispenserCommand(SubFunnel), new WaitCommand(4)));
-    addCommands(new ParallelRaceGroup(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel), new WaitCommand(4)));
+    addCommands(new ParallelRaceGroup(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel)));
     
   }
 }

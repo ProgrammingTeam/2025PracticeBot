@@ -26,7 +26,7 @@ public class RotatorFwdCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_AlgaeSub.rotater.spin(0.2);
+    m_AlgaeSub.rotater.spin(1);
   }
 
   // Called once the command ends or is interrupted.

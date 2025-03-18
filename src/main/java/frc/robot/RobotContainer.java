@@ -31,7 +31,6 @@ import com.reduxrobotics.canand.CanandEventLoop;
 
 import java.io.File;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -43,7 +42,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.DispenserCommand;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
-import frc.robot.commands.ScoreL3;
+import frc.robot.commands.Score;
 import frc.robot.commands.RotatorFwdCmd;
 import frc.robot.commands.RotatorBwdCmd;
 import frc.robot.subsystems.ElevatorSub;
@@ -65,11 +64,11 @@ import swervelib.parser.SwerveParser;
 public class RobotContainer {
 
   SwerveDrive m_Swerve;
-  private final AlgaeSub algae = new AlgaeSub();
-  private final FunnelSub FunnelSubSystem = new FunnelSub();
+ private final AlgaeSub algae = new AlgaeSub();
+ private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
   private final SwerveSub subSwerve;
-  private final LimelightSub m_LimelightSub;
+//  private final LimelightSub m_LimelightSub;
   
 
   private final ElevatorCmd m_ElevatorCmd;
@@ -106,14 +105,14 @@ public class RobotContainer {
       e.printStackTrace();
     }
     subSwerve = new SwerveSub(m_Swerve, m_ElvSub);
-    m_LimelightSub = new LimelightSub(subSwerve);
+    //m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
     m_ElvSub.setDefaultCommand(m_ElevatorCmd);
-    // subSwerve.setDefaultCommand(driveCom);
-   autoChooser = AutoBuilder.buildAutoChooser();
-  SmartDashboard.putData("Auto Chooser", autoChooser);
+    subSwerve.setDefaultCommand(driveCom);
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
-    NamedCommands.registerCommand("Score L3", new ScoreL3(m_ElvSub, FunnelSubSystem));
+    //NamedCommands.registerCommand("Score L3", new ScoreL3(m_ElvSub, FunnelSubSystem));
 
 
     configureBindings();
@@ -134,19 +133,39 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
 
     // leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
     // rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
 
-    // m_driverController.a().whileTrue(inCom);
-    // m_driverController.b().whileTrue(disCom);
-    // m_driverController.x().onTrue(new InstantCommand(() -> {
-    //  algae.arm.setSetpoint(0);
-    // }));
-    // m_driverController.y().onTrue(new InstantCommand(() -> {
-      // algae.arm.setSetpoint(7.5);
-    // }));
+    leftJoystick.button(1).whileTrue(inCom);
+    rightJoystick.button(1).whileTrue(disCom);
+    m_driverController.x().onTrue(new InstantCommand(() -> {
+     algae.arm.setSetpoint(0);
+    }));
+    m_driverController.y().onTrue(new InstantCommand(() -> {
+      algae.arm.setSetpoint(2.67);
+    }));
+
+    // Right joystick left side
+    // - - 4
+    // 3 2 1
+    rightJoystick.button(8).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L1));
+    rightJoystick.button(9).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L2));
+    rightJoystick.button(10).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3));
+    rightJoystick.button(7).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
+
+    // Right joystick right side
+    // - - e
+    // c - -
+    rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
+    rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
+
+
+
+    m_driverController.leftBumper().whileTrue(fwdCom);
+    m_driverController.rightBumper().whileTrue(bwdCom);
+
 
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 

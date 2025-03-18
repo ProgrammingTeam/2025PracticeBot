@@ -6,8 +6,13 @@ package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.config.SparkBaseConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class FunnelSub extends SubsystemBase {
   // changed both protected class to public final,
@@ -17,11 +22,16 @@ public class FunnelSub extends SubsystemBase {
     SparkMax intakeMotor;
 
     public Intake() {
-      intakeMotor = new SparkMax(31, SparkLowLevel.MotorType.kBrushless);
+      intakeMotor = new SparkMax(Constants.CANBus.coralIntake, SparkLowLevel.MotorType.kBrushless);
+      SparkMaxConfig config = new SparkMaxConfig();
+
+    // when not inverted, positive percent output drives the elevator upward
+    config.inverted(true);
+    intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public void forward() {
-      intakeMotor.set(0.2);
+      intakeMotor.set(1);
     } 
 
     public void stop() {
@@ -34,13 +44,21 @@ public class FunnelSub extends SubsystemBase {
     SparkMax rightMotor;
 
     public Dispenser() {
-      leftMotor = new SparkMax(32, SparkLowLevel.MotorType.kBrushless);
-      rightMotor = new SparkMax(33, SparkLowLevel.MotorType.kBrushless);
+      leftMotor = new SparkMax(Constants.CANBus.lCoralShooter, SparkLowLevel.MotorType.kBrushless);
+      rightMotor = new SparkMax(Constants.CANBus.rCoralShooter, SparkLowLevel.MotorType.kBrushless);
+
+      SparkMaxConfig configL = new SparkMaxConfig();
+      configL.inverted(false);
+      SparkMaxConfig configR = new SparkMaxConfig();
+      configR.inverted(true);
+
+      leftMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+      rightMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     public void forward() {
-      leftMotor.set(0.2);
-      rightMotor.set(0.2);
+      leftMotor.set(0.5);
+      rightMotor.set(0.5);
     }
 
     public void stop() {

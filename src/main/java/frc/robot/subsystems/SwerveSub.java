@@ -4,24 +4,17 @@
 
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.Rotation;
-
-import java.io.File;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import swervelib.SwerveDrive;
-import swervelib.parser.SwerveParser;
 
 public class SwerveSub extends SubsystemBase {
   SwerveDrive swerveDrive;
@@ -38,7 +31,6 @@ public class SwerveSub extends SubsystemBase {
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
       config = null;
-      // Handle exception as needed
       e.printStackTrace();
     }
     AutoBuilder.configure(

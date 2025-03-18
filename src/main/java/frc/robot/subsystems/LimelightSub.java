@@ -47,8 +47,8 @@ public class LimelightSub extends SubsystemBase {
     
     LimelightHelpers.SetRobotOrientation("limelight", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
     LimelightHelpers.PoseEstimate mt2 = redAlliance ? 
-            LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight") : 
-            LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+    LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight") : 
+    LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
     doRejectUpdate = false;
     if(Math.abs(m_gyro.getAngularVelocityYaw()) > 720) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
     {

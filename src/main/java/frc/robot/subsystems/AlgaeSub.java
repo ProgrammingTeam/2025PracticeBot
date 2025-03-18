@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -22,7 +24,7 @@ public class AlgaeSub extends SubsystemBase {
     RelativeEncoder angleEncoder;
 
     public Arm() {
-      armMotor = new SparkMax(41, SparkLowLevel.MotorType.kBrushless);
+      armMotor = new SparkMax(Constants.CANBus.algaeArm, SparkLowLevel.MotorType.kBrushless);
       PID = new PIDController(Constants.AlgeaConstants.Kp, 0, 0);
       angleEncoder = armMotor.getEncoder();
       PID.setTolerance(0.02);
@@ -30,7 +32,7 @@ public class AlgaeSub extends SubsystemBase {
 
     private double motorRotationsToArmRotations(double motor)
     {
-      return motor;
+      return motor * Constants.AlgeaConstants.armGearRatio;
     }
 
     //In full circles, from [0, 0.25] is the effective range
@@ -54,7 +56,9 @@ public class AlgaeSub extends SubsystemBase {
     SparkMax rotatorMotor;
 
     public Rotater() {
-      rotatorMotor = new SparkMax(42, SparkLowLevel.MotorType.kBrushless);
+      rotatorMotor = new SparkMax(Constants.CANBus.algaeRotator, SparkLowLevel.MotorType.kBrushless);
+      SparkMaxConfig config = new SparkMaxConfig();
+      config.idleMode(IdleMode.kBrake);
     }
 
     public void spin(double spin) {
@@ -79,7 +83,7 @@ public class AlgaeSub extends SubsystemBase {
     // This method will be called once per scheduler run
     double rotateSpeed = arm.getPIDOutput();
     rotateSpeed = MathUtil.clamp(rotateSpeed, -0.1, 0.1);
-      arm.spin(rotateSpeed);
-      SmartDashboard.putNumber("Encoder position", arm.angleEncoder.getPosition());  
+    arm.spin(rotateSpeed);
+    SmartDashboard.putNumber("Encoder position", arm.angleEncoder.getPosition());  
     }
 }

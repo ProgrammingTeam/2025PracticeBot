@@ -12,11 +12,13 @@ import frc.robot.subsystems.ElevatorSub;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AutoElevatorCmd extends Command {
-  ElevatorSub m_ElvSub;
-  ElevatorPositions m_ElevatorPosition;
+  private final ElevatorSub m_ElvSub;
+  private final ElevatorPositions m_ElevatorPosition;
+  
   /** Creates a new AutoElevatorCmd. */
   public AutoElevatorCmd(ElevatorSub ElvSub, ElevatorPositions elevatorPosition) {
     m_ElvSub = ElvSub;
+    m_ElevatorPosition = elevatorPosition;
     addRequirements(m_ElvSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -24,6 +26,7 @@ public class AutoElevatorCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+ 
     m_ElvSub.changePosition(m_ElevatorPosition);
   }
 
