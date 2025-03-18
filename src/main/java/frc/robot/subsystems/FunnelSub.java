@@ -18,6 +18,8 @@ public class FunnelSub extends SubsystemBase {
   // changed both protected class to public final,
   // until a mentor comes to change it back and teach us how to use it this is how
   // it will be used -Loki
+  // Protected classes are not accessable from outside the package -- Similar use to public except a difference 
+  // Refer to @link https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in
   public final class Intake {
     SparkMax intakeMotor;
 
@@ -67,10 +69,10 @@ public class FunnelSub extends SubsystemBase {
     }
   }
 
-  /** Creates a new FunnelSub. */
   public final Intake intake;
   public final Dispenser dispenser;
 
+  // Creates a new funnel sub constructor
   public FunnelSub() {
     intake = new Intake();
     dispenser = new Dispenser();
@@ -79,6 +81,5 @@ public class FunnelSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
   }
 }

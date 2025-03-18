@@ -4,19 +4,8 @@
 
 package frc.robot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide
- * numerical or boolean
- * constants. This class should not be used for any other purpose. All constants
- * should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>
- * It is advised to statically import this class (or one of its inner classes)
- * wherever the
- * constants are needed, to reduce verbosity.
- */
 // Alex was here 1/16/2025
+// Class that is the parent of other constant classes; has general defs such as axis defs
 public final class Constants {
   public static final double speedMultiplier = 5;
 
@@ -52,10 +41,11 @@ public final class Constants {
     public static final int algaeRotator = 42;
   }
 
-  public static class ElevatorConstants {
-    public static final double kP = 0.18;
-    public static final double kI = 0.0000;
-    public static final double kD = 0;
+    // Constants for the elevator -- speed, accel, etc...
+    public static class ElevatorConstants {
+        public static final double kP = 0.18;
+        public static final double kI = 0.0000;
+        public static final double kD = 0;
 
     public static final double mountingHeight = 9.7; //inch
     public static final double rotationsPerInch = 1.927; //full revolutions of motor per inch elevator raised
@@ -72,43 +62,42 @@ public final class Constants {
       // startAlgaeHigh(2),
       processor(1);
 
-      public final double height;
+          public final double height;
 
-      private ElevatorPositions(double height) {
-        this.height = height;
-      }
-      // public static final double L1 = 18;
-      // public static final double L2 = 31;
-      // public static final double L3 = 47;
-      // public static final double L4 = 72;
-      // public static final double corolStation = 37;
-      // public static final double travel = 0;
+        private ElevatorPositions(double height) {
+            this.height = height;
+        }
+          // public static final double L1 = 18;
+          // public static final double L2 = 31;
+          // public static final double L3 = 47;
+          // public static final double L4 = 72;
+          // public static final double corolStation = 37;
+          // public static final double travel = 0;
     }
   }
 
-
+    // Constants for the port of the joysticks
     public static class OperatorConstants {
         public static final int kDriverControllerPort = 0;
         public static final int LeftJoystickPort = 1;
         public static final int RightJoystickPort = 2;
     }
 
+    // Constants for the limelight e.g. the target heights and the position of the limelight
     public static class LimelightConstants {
-
         public static final double[] targetHeights = {0, 58.5, 58.5, 51, 74.25, 74.25, 12, 66, 66, 12, 12, 12,
                                                          58.5, 58.5, 74.25, 74.2, 51.5, 12, 12, 12, 12, 12, 12};
         public static final double limelightHeight = 44.5;
         public static final double angleOffset = 0;
         public static final double LeftPositionOffset = 0;
         public static final int RightPositionOffset = 0;
-
     }
 
+    // Contains gear ratios and motor rots
     public static class AlgeaConstants {
         public static final double Kp = 0.6; 
         
         //Motor rotations per rotation of the arm
         public static final double armGearRatio = 0.2;
     }
-
 }

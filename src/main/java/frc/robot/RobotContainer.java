@@ -52,17 +52,8 @@ import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 
-/**
- * This class is where the bulk of the robot should be declared. Since
- * Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in
- * the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of
- * the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+// The class def of RobotContainer; contains subsystem defs and controllers
 public class RobotContainer {
-
   SwerveDrive m_Swerve;
  private final AlgaeSub algae = new AlgaeSub();
  private final FunnelSub FunnelSubSystem = new FunnelSub();
@@ -84,18 +75,15 @@ public class RobotContainer {
   private final CommandJoystick rightJoystick = new CommandJoystick(OperatorConstants.RightJoystickPort);
   private final SendableChooser<Command> autoChooser;
 
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  // Constructor of RobotContainer; Contains subsystems, OI devices, and commands init
   public RobotContainer() {
-
     CanandEventLoop.getInstance();
     m_ElevatorCmd = new ElevatorCmd(m_ElvSub, m_driverController, rightJoystick);
     inCom = new IntakeCommand(FunnelSubSystem);
     disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
     bwdCom = new RotatorBwdCmd(algae);
+    
     try {
       double maximumSpeed = 0.1;
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -104,6 +92,7 @@ public class RobotContainer {
       System.out.println("Failed");
       e.printStackTrace();
     }
+    
     subSwerve = new SwerveSub(m_Swerve, m_ElvSub);
     //m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
@@ -118,20 +107,7 @@ public class RobotContainer {
     configureBindings();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
-   * {@link
-   * CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
+  // Method for configuring/init the bindings; Joysticks, Xbox, Keyboard, etc...
   private void configureBindings() {
     leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
 
@@ -167,11 +143,17 @@ public class RobotContainer {
     m_driverController.rightBumper().whileTrue(bwdCom);
 
 
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Funnel button commands -- button linking
+    // m_driverController.a().onTrue(inCom);
+    // m_driverController.b().onTrue(disCom);
 
-    //funnel Comands
-      // m_driverController.a().onTrue(inCom);
-      // m_driverController.b().onTrue(disCom);
+    // PID elevator commands -- button linking
+    //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
+    //  m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
+    //  m_driverController.a().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L3));
+    //  m_driverController.x().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L4));
+    // m_driverController.leftBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.corolStation));
+    // m_driverController.rightBumper().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.travel));
 
 // pid elevator commands
       //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
@@ -188,13 +170,10 @@ public class RobotContainer {
     // m_driverController.b().whileTrue();
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   * Alex was here 2/18/2025
-   * @return the command to run in autonomous
-   */
+  // Alex was here 2/18/2025 and so was I Loki 3/18/2025
+
+  // Defines the getAutonomousCommand to return a selected autonomous plan
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
     return autoChooser.getSelected();
   }
 }
