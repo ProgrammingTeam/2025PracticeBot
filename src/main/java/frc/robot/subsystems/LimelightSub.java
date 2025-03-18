@@ -43,8 +43,6 @@ public class LimelightSub extends SubsystemBase {
   @Override
   public void periodic() {
     try {
-      
-
       TyValue = LimeTY.getDouble(0) +2;
       TxValue = LimeTX.getDouble(0); 
       tagIDNumber = LimeTid.getInteger(0);  
