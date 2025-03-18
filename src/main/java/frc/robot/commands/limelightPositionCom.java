@@ -9,62 +9,59 @@ import frc.robot.Constants;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class limelightPositionCom extends Command {
   private final LimelightSub m_LimelightSub;
   private final SwerveSub m_Swerve;
   private final boolean LeftOffset;
   boolean toPosition;
-  /** Creates a new limlightPositionCom. */
+
+  // Constructor for LimelightPosition Command
   public limelightPositionCom(LimelightSub LimeSub, SwerveSub SwerveSub, boolean leftDirectionalOffset) {
     m_LimelightSub = LimeSub;
     m_Swerve = SwerveSub;
     LeftOffset = leftDirectionalOffset;
-    // Use addRequirements() here to declare subsystem dependencies.
+    
     addRequirements(m_LimelightSub);
     addRequirements(m_Swerve);
   }
 
-  // Called when the command is initially scheduled.
+  // Method that the robot calls when cmd is init
   @Override
   public void initialize() {
     toPosition = false;
     m_Swerve.drive(0, 0, 0);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Method that runs when execute is scheduled -- main position logic is here
   @Override
   public void execute() {
     if (LeftOffset) {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.LeftPositionOffset + 1) {
         m_Swerve.drive(0.2, 0, 0);
-      }
-      else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.LeftPositionOffset - 1) {
+      } else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.LeftPositionOffset - 1) {
         m_Swerve.drive(-0.2, 0, 0);
-      }
-      else {
+      } else {
         m_Swerve.drive(0, 0, 0);
         toPosition = true;
       }
-    }
-    else {
+    } else {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.RightPositionOffset + 1) {
         m_Swerve.drive(0.2, 0, 0);
-      }
-      else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.RightPositionOffset - 1) {
+      } else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.RightPositionOffset - 1) {
         m_Swerve.drive(-0.2, 0, 0);
-      }
-      else {
+      } else {
         m_Swerve.drive(0, 0, 0);
         toPosition = true;
       }
     }
   }
-  // Called once the command ends or is interrupted.
+  
+  // Do nothing if the cmd is interrupted
+  // TODO: Add safety features if this cmd is stopped, like stop calc.
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
+  // Return the position when the cmd ends
   @Override
   public boolean isFinished() {
     return toPosition;
