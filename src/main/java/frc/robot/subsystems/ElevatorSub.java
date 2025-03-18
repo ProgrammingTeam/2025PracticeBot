@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ElevatorSub extends SubsystemBase {
-  //TODO: REMOVE BACK AND FRONT MOTOR LOGIC -- FIX LOGIC AND IMPLEMENT FEATURES
-  /** Creates a new ElevatorSub. */
+  // TODO: REMOVE BACK AND FRONT MOTOR LOGIC -- FIX LOGIC AND IMPLEMENT FEATURES
+  // TODO: USE BETTER NAMING BASED ON POSITION OR DEVICE; motor1 - 4 and someMotorA - D.
   private SparkMax motor1 = new SparkMax(Constants.CANIds.someMotorA, MotorType.kBrushless);
   private SparkMax motor2 = new SparkMax(Constants.CANIds.someMotorB, MotorType.kBrushless);
   private SparkMax motor3 = new SparkMax(Constants.CANIds.someMotorC, MotorType.kBrushless);
@@ -26,9 +26,10 @@ public class ElevatorSub extends SubsystemBase {
   private double motor1_E_Val;
   private double motor3_E_Val;
 
-  public ElevatorSub() {
-  }
+  // Empty constructor for elevator sub
+  public ElevatorSub() {}
 
+  // Methods to seperatly set speed for front or back motors
   public void frontMotors(double speed) {
     motor1.set(speed);
     motor2.set(speed);
@@ -39,6 +40,7 @@ public class ElevatorSub extends SubsystemBase {
     motor4.set(speed);
   }
 
+  //Periodically check the encoders positions and push the value to smartdashboard
   @Override
   public void periodic() {
     motor1_E_Val = motor1Encoder.getPosition();
