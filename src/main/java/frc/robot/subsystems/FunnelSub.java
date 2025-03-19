@@ -19,10 +19,11 @@ public class FunnelSub extends SubsystemBase {
   // until a mentor comes to change it back and teach us how to use it this is how
   // it will be used -Loki
   // Protected classes are not accessable from outside the package -- Similar use to public except a difference 
-  // Refer to @link https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in
+  // Refer to @link https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in -- Adrian
   public final class Intake {
     SparkMax intakeMotor;
 
+    // Constructor Intake
     public Intake() {
       intakeMotor = new SparkMax(Constants.CANBus.coralIntake, SparkLowLevel.MotorType.kBrushless);
       SparkMaxConfig config = new SparkMaxConfig();
@@ -32,6 +33,7 @@ public class FunnelSub extends SubsystemBase {
     intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
+    // Basic move methods -- On or Off
     public void forward() {
       intakeMotor.set(1);
     } 
@@ -41,10 +43,12 @@ public class FunnelSub extends SubsystemBase {
     }
   }
 
+  // Nested class Dispenser
   public final class Dispenser {
     SparkMax leftMotor;
     SparkMax rightMotor;
 
+    // Constructor dispenser
     public Dispenser() {
       leftMotor = new SparkMax(Constants.CANBus.lCoralShooter, SparkLowLevel.MotorType.kBrushless);
       rightMotor = new SparkMax(Constants.CANBus.rCoralShooter, SparkLowLevel.MotorType.kBrushless);
@@ -58,6 +62,7 @@ public class FunnelSub extends SubsystemBase {
       rightMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
+    // Basic move cmds -- Set both motors at half speed or off
     public void forward() {
       leftMotor.set(0.5);
       rightMotor.set(0.5);
@@ -76,10 +81,9 @@ public class FunnelSub extends SubsystemBase {
   public FunnelSub() {
     intake = new Intake();
     dispenser = new Dispenser();
-
   }
 
+  // Currently unused periodic method to fetch every run
   @Override
-  public void periodic() {
-  }
+  public void periodic() {}
 }
