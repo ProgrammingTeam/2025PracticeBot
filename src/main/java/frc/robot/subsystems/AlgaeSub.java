@@ -17,12 +17,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class AlgaeSub extends SubsystemBase {
-  /** Creates a new AlgaeSub./ **/
+
+  // Parent Class Arm
   public final class Arm {
     SparkMax armMotor;
     PIDController PID;
     RelativeEncoder angleEncoder;
 
+    // Constructor Arm
     public Arm() {
       armMotor = new SparkMax(Constants.CANBus.algaeArm, SparkLowLevel.MotorType.kBrushless);
       PID = new PIDController(Constants.AlgeaConstants.Kp, 0, 0);
@@ -30,31 +32,29 @@ public class AlgaeSub extends SubsystemBase {
       PID.setTolerance(0.02);
     }
 
-    private double motorRotationsToArmRotations(double motor)
-    {
+    private double motorRotationsToArmRotations(double motor) {
       return motor * Constants.AlgeaConstants.armGearRatio;
     }
 
     //In full circles, from [0, 0.25] is the effective range
-    public void setSetpoint(double newSetpoint)
-    {
+    public void setSetpoint(double newSetpoint) {
       PID.setSetpoint(newSetpoint);
     }
 
-    public double getPIDOutput()
-    {
+    public double getPIDOutput() {
       return PID.calculate(motorRotationsToArmRotations(angleEncoder.getPosition()));
     }
-    
 
     protected void spin(double spin) {
       armMotor.set(spin);
     }
   }
 
+  // Rotator Class
   public final class Rotater {
     SparkMax rotatorMotor;
 
+    // Rotator constructor
     public Rotater() {
       rotatorMotor = new SparkMax(Constants.CANBus.algaeRotator, SparkLowLevel.MotorType.kBrushless);
       SparkMaxConfig config = new SparkMaxConfig();
@@ -73,6 +73,7 @@ public class AlgaeSub extends SubsystemBase {
   public final Rotater rotater;
   public final Arm arm;
 
+  // Main(Top Parent) class AlgaeSub's Constructor
   public AlgaeSub() {
     rotater = new Rotater();
     arm = new Arm();
@@ -80,10 +81,10 @@ public class AlgaeSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     double rotateSpeed = arm.getPIDOutput();
     rotateSpeed = MathUtil.clamp(rotateSpeed, -0.1, 0.1);
     arm.spin(rotateSpeed);
+    
     SmartDashboard.putNumber("Encoder position", arm.angleEncoder.getPosition());  
     }
 }
