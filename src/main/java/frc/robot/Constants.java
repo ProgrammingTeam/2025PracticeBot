@@ -82,6 +82,7 @@ public final class Constants {
         public static final int kDriverControllerPort = 0;
         public static final int LeftJoystickPort = 1;
         public static final int RightJoystickPort = 2;
+        public static final String DEADBAND = null;
     }
 
     // Constants for the limelight e.g. the target heights and the position of the limelight

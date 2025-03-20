@@ -7,65 +7,61 @@
         {
           "type": "path",
           "data": {
-<<<<<<<< HEAD:src/main/deploy/pathplanner/autos/middle blue, back side.auto
-            "pathName": "Side Auto"
-========
-            "pathName": "Copy of R Ally To FR Reef"
->>>>>>>> 7a9867e94410780e948d656b407a3060ac3bb62a:src/main/deploy/pathplanner/autos/mid to FR place 1 to CR place 2 & remove Algae.auto
+            "pathName": "R Ally To FR Reef"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "place coral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "grab algae"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "throw algae on floor"
+            "name": "Score"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "go to algae + coral"
+            "pathName": "Copy of Reef to coral dispenser"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "grab algae"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "throw algae on floor"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "grab coral"
+            "name": "Score"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "go back to thing"
+            "pathName": "Copy of Coral Dispenser to reef pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Copy of Coral Dispenser to reef pt 2"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "place coral"
+            "name": "Score pt 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Copy of Reef to coral dispenser pt 2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Recieve coral "
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score pt 3"
           }
         }
       ]

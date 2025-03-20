@@ -34,6 +34,7 @@ public class LimelightSub extends SubsystemBase {
 
   @Override
   public void periodic() {
+    /* 
     var alliance = DriverStation.getAlliance();
     
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
@@ -63,5 +64,7 @@ public class LimelightSub extends SubsystemBase {
         mt2.pose,
         mt2.timestampSeconds);
     }  
+
+*/
   }
 }

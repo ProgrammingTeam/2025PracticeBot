@@ -4,6 +4,26 @@
 
 package frc.robot;
 
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.seasonspecific.crescendo2024.CrescendoNoteOnField;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnField;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralAlgaeStack;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnField;
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -18,6 +38,12 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  StructArrayPublisher<Pose3d> coralPoses = NetworkTableInstance.getDefault()
+  .getStructArrayTopic("CoralPosesArray", Pose3d.struct)
+  .publish();
+  StructArrayPublisher<Pose3d> algaePoses = NetworkTableInstance.getDefault()
+  .getStructArrayTopic("AlgaePosesArray", Pose3d.struct)
+  .publish();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -88,15 +114,33 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
   }
 
+
+
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {}
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+    SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralOnField(
+      // We must specify a heading since the coral is a tube
+      new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
+      SimulatedArena.getInstance().addGamePiece(new ReefscapeAlgaeOnField(new Translation2d(2,2)));
+      SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(new Translation2d(3,2)));
+
+
+}
+  
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+   SimulatedArena.getInstance().simulationPeriodic();
+  coralPoses.accept(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
+  SimulatedArena.getInstance().simulationPeriodic();
+  algaePoses.accept(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
+
+  }
+  
 }

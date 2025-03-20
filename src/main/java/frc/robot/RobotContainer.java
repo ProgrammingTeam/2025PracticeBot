@@ -18,9 +18,6 @@ import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -37,10 +34,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
+
 import frc.robot.commands.DispenserCommand;
-import frc.robot.commands.DriveCmd;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.Score;
 import frc.robot.commands.RotatorFwdCmd;
@@ -54,10 +49,12 @@ import swervelib.parser.SwerveParser;
 
 // The class def of RobotContainer; contains subsystem defs and controllers
 public class RobotContainer {
+
   SwerveDrive m_Swerve;
  private final AlgaeSub algae = new AlgaeSub();
  private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
+
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
   
