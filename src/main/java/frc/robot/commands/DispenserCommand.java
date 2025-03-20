@@ -14,30 +14,29 @@ public class DispenserCommand extends Command {
   public DispenserCommand(FunnelSub funnel) {
     m_FunnelSub = funnel;
     
-
     addRequirements(m_FunnelSub);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+  // Called when init
   @Override
   public void initialize() {
     m_FunnelSub.dispenser.stop();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called when scheduled
   @Override
   public void execute() {
     m_FunnelSub.dispenser.forward();
   }
 
-  // Called once the command ends or is interrupted.
+  // Called when interrupted, preform safety function
   @Override
   public void end(boolean interrupted) {
     m_FunnelSub.dispenser.stop();
   }
 
-  // Returns true when the command should end.
+  // Returns false for isFinished
   @Override
   public boolean isFinished() {
     return false;

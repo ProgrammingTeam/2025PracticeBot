@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 import frc.robot.subsystems.ElevatorSub;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+// Class of AutoElevatorCmd
 public class AutoElevatorCmd extends Command {
   private final ElevatorSub m_ElvSub;
   private final ElevatorPositions m_ElevatorPosition;
   
-  /** Creates a new AutoElevatorCmd. */
+  // Constructor for AutoElevatorCmd
   public AutoElevatorCmd(ElevatorSub ElvSub, ElevatorPositions elevatorPosition) {
     m_ElvSub = ElvSub;
     m_ElevatorPosition = elevatorPosition;
@@ -23,14 +23,13 @@ public class AutoElevatorCmd extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+  // Called when first init
   @Override
   public void initialize() {
- 
     m_ElvSub.changePosition(m_ElevatorPosition);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // TODO: Add logic to execute
   @Override
   public void execute() {}
 

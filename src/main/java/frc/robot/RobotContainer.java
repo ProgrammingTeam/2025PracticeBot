@@ -61,7 +61,6 @@ public class RobotContainer {
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
   
-
   private final ElevatorCmd m_ElevatorCmd;
   private final DriveCmd driveCom;
   private final IntakeCommand inCom; 
@@ -102,8 +101,7 @@ public class RobotContainer {
     SmartDashboard.putData("Auto Chooser", autoChooser);
 
     //NamedCommands.registerCommand("Score L3", new ScoreL3(m_ElvSub, FunnelSubSystem));
-
-
+    
     configureBindings();
   }
 
@@ -137,11 +135,8 @@ public class RobotContainer {
     rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
     rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
 
-
-
     m_driverController.leftBumper().whileTrue(fwdCom);
     m_driverController.rightBumper().whileTrue(bwdCom);
-
 
     // Funnel button commands -- button linking
     // m_driverController.a().onTrue(inCom);
@@ -170,7 +165,7 @@ public class RobotContainer {
     // m_driverController.b().whileTrue();
   }
 
-  // Alex was here 2/18/2025 and so was I Loki 3/18/2025
+  // Alex was here 2/18/2025 and so was I Loki 3/18/2025 bueno
 
   // Defines the getAutonomousCommand to return a selected autonomous plan
   public Command getAutonomousCommand() {

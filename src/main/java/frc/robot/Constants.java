@@ -42,10 +42,10 @@ public final class Constants {
   }
 
     // Constants for the elevator -- speed, accel, etc...
-    public static class ElevatorConstants {
-        public static final double kP = 0.18;
-        public static final double kI = 0.0000;
-        public static final double kD = 0;
+  public static class ElevatorConstants {
+    public static final double kP = 0.18;
+    public static final double kI = 0.0000;
+    public static final double kD = 0;
 
     public static final double mountingHeight = 9.7; //inch
     public static final double rotationsPerInch = 1.927; //full revolutions of motor per inch elevator raised
@@ -62,17 +62,18 @@ public final class Constants {
       // startAlgaeHigh(2),
       processor(1);
 
-          public final double height;
+      public final double height;
 
-        private ElevatorPositions(double height) {
-            this.height = height;
-        }
-          // public static final double L1 = 18;
-          // public static final double L2 = 31;
-          // public static final double L3 = 47;
-          // public static final double L4 = 72;
-          // public static final double corolStation = 37;
-          // public static final double travel = 0;
+      private ElevatorPositions(double height) {
+          this.height = height;
+      }
+          
+      // public static final double L1 = 18;
+      // public static final double L2 = 31;
+      // public static final double L3 = 47;
+      // public static final double L4 = 72;
+      // public static final double corolStation = 37;
+      // public static final double travel = 0;
     }
   }
 

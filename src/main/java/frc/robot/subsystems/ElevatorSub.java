@@ -1,7 +1,6 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-// battery 
 
 package frc.robot.subsystems;
 
@@ -30,6 +29,7 @@ public class ElevatorSub extends SubsystemBase {
   private ElevatorPositions m_Position;
   public double elevatorDriveSpeedMultiplier;
 
+  // Constructor of ElevatorSub
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig configL = new SparkMaxConfig();
@@ -45,16 +45,12 @@ public class ElevatorSub extends SubsystemBase {
     
     pid.setTolerance(0.5);
   }
-
-  
+ 
   public void changePosition(ElevatorPositions position){
     m_Position = position;
     pid.setSetpoint(m_Position.height);
   }
  
-    
- 
-
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
@@ -70,45 +66,37 @@ public class ElevatorSub extends SubsystemBase {
     
     if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.1;
-    }
-    else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.2;
-    }
-    else if ((ElevatorPositions.L2.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.L2.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.3;
-    }
-    else if ((ElevatorPositions.L1.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.L1.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.4;
-    }
-    else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 1;
-    }
-    else {
+    } else {
       elevatorDriveSpeedMultiplier = 1;
     }
   }
 
   public void move(double elevateSpeed) {
     leftElevateMotor.set(elevateSpeed);
-}
+  }
+  
   public double EncoderValue() {
-      return leftEncoder.getPosition();
+    return leftEncoder.getPosition();
   }
   
   public boolean atPidSetpoint() {
     return pid.atSetpoint();
   }
 
-  public void resetEncoder()
-  {
+  public void resetEncoder() {
     leftEncoder.setPosition(0);
   }
 
-  /**
-   * @return end of coral manipulator compared to ground level of the field in inches
-   */
-  public double encoderValueAsFieldHeight()
-  {
+  //@return end of coral manipulator compared to ground level of the field in inches
+  public double encoderValueAsFieldHeight() {
     return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
   }
 }
