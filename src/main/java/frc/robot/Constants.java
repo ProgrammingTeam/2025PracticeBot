@@ -51,11 +51,11 @@ public final class Constants {
     public static final double rotationsPerInch = 1.927; //full revolutions of motor per inch elevator raised
 
     public static enum ElevatorPositions {
-      L1(24),
-      L2(35),
-      L3(47),
+      L1(27),
+      L2(48),
+      L3(75),
       L4(77),
-      corolStation(37.7),
+      corolStation(15),
       travel(0),
       // net(4),
       // startAlgaeLow(3),
@@ -100,6 +100,6 @@ public final class Constants {
         public static final double Kp = 0.6; 
         
         //Motor rotations per rotation of the arm
-        public static final double armGearRatio = 0.2;
+        public static final double armGearRatio = 0.1;
     }
 }

@@ -68,10 +68,6 @@ public class ElevatorSub extends SubsystemBase {
       elevatorDriveSpeedMultiplier = 0.1;
     } else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.2;
-    } else if ((ElevatorPositions.L2.height <= leftEncoder.getPosition())) {
-      elevatorDriveSpeedMultiplier = 0.3;
-    } else if ((ElevatorPositions.L1.height <= leftEncoder.getPosition())) {
-      elevatorDriveSpeedMultiplier = 0.4;
     } else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 1;
     } else {

@@ -14,6 +14,7 @@ import frc.robot.subsystems.ElevatorSub;
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.LimelightPositionCom;
+import frc.robot.commands.ManuelAlgueArm;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
@@ -52,7 +53,7 @@ public class RobotContainer {
 
   SwerveDrive m_Swerve;
  private final AlgaeSub algae = new AlgaeSub();
- private final FunnelSub FunnelSubSystem = new FunnelSub();
+ //private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
 
   private final SwerveSub subSwerve;
@@ -60,10 +61,11 @@ public class RobotContainer {
   
   private final ElevatorCmd m_ElevatorCmd;
   private final DriveCmd driveCom;
-  private final IntakeCommand inCom; 
-  private final DispenserCommand disCom;
+ // private final IntakeCommand inCom; 
+  //private final DispenserCommand disCom;
   private final RotatorFwdCmd fwdCom;
   private final RotatorBwdCmd bwdCom;
+
 
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -75,8 +77,8 @@ public class RobotContainer {
   public RobotContainer() {
     CanandEventLoop.getInstance();
     m_ElevatorCmd = new ElevatorCmd(m_ElvSub, m_driverController, rightJoystick);
-    inCom = new IntakeCommand(FunnelSubSystem);
-    disCom = new DispenserCommand(FunnelSubSystem);
+   // inCom = new IntakeCommand(FunnelSubSystem);
+   // disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
     bwdCom = new RotatorBwdCmd(algae);
     
@@ -104,19 +106,24 @@ public class RobotContainer {
 
   // Method for configuring/init the bindings; Joysticks, Xbox, Keyboard, etc...
   private void configureBindings() {
-    leftJoystick.button(7).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
+    rightJoystick.button(3).onTrue(new InstantCommand(subSwerve::zeroGyro, subSwerve));
 
     // leftJoystick.button(3).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  true));
     // rightJoystick.button(4).whileTrue(new limelightPositionCom(m_LimelightSub, subSwerve,  false));
 
-    leftJoystick.button(1).whileTrue(inCom);
-    rightJoystick.button(1).whileTrue(disCom);
-    m_driverController.x().onTrue(new InstantCommand(() -> {
+    //leftJoystick.button(1).whileTrue(inCom);
+    //rightJoystick.button(1).whileTrue(disCom);
+    m_driverController.x().whileTrue(new ManuelAlgueArm(algae, -0.4));
+    m_driverController.y().whileTrue(new ManuelAlgueArm(algae, 0.4));
+   /*  m_driverController.x().onTrue(new InstantCommand(() -> {
      algae.arm.setSetpoint(0);
     }));
     m_driverController.y().onTrue(new InstantCommand(() -> {
-      algae.arm.setSetpoint(2.67);
+      algae.arm.setSetpoint(2.5);
     }));
+    m_driverController.a().onTrue(new InstantCommand(() -> {
+      algae.arm.setSetpoint(1.5);
+    })); */
 
     // Right joystick left side
     // - - 4

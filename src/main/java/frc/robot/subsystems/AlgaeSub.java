@@ -21,17 +21,19 @@ public class AlgaeSub extends SubsystemBase {
   // Parent Class Arm
   public final class Arm {
     SparkMax armMotor;
-    PIDController PID;
+   // PIDController PID;
     RelativeEncoder angleEncoder;
-
+  
     // Constructor Arm
     public Arm() {
       armMotor = new SparkMax(Constants.CANBus.algaeArm, SparkLowLevel.MotorType.kBrushless);
-      PID = new PIDController(Constants.AlgeaConstants.Kp, 0, 0);
+    //  PID = new PIDController(Constants.AlgeaConstants.Kp, 0, 0);
       angleEncoder = armMotor.getEncoder();
-      PID.setTolerance(0.02);
+     // PID.setTolerance(0.02);
+      SparkMaxConfig armConfig = new SparkMaxConfig();
+      armConfig.smartCurrentLimit(40);
     }
-
+  /*   
     private double motorRotationsToArmRotations(double motor) {
       return motor * Constants.AlgeaConstants.armGearRatio;
     }
@@ -44,8 +46,8 @@ public class AlgaeSub extends SubsystemBase {
     public double getPIDOutput() {
       return PID.calculate(motorRotationsToArmRotations(angleEncoder.getPosition()));
     }
-
-    protected void spin(double spin) {
+*/
+    public void spin(double spin) {
       armMotor.set(spin);
     }
   }
@@ -81,9 +83,9 @@ public class AlgaeSub extends SubsystemBase {
 
   @Override
   public void periodic() {
-    double rotateSpeed = arm.getPIDOutput();
-    rotateSpeed = MathUtil.clamp(rotateSpeed, -0.1, 0.1);
-    arm.spin(rotateSpeed);
+   // double rotateSpeed = arm.getPIDOutput();
+   // rotateSpeed = MathUtil.clamp(rotateSpeed, -0.1, 0.1);
+    //arm.spin(rotateSpeed);
     
     SmartDashboard.putNumber("Encoder position", arm.angleEncoder.getPosition());  
     }
