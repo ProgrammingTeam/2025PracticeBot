@@ -113,8 +113,8 @@ public class RobotContainer {
 
     //leftJoystick.button(1).whileTrue(inCom);
     //rightJoystick.button(1).whileTrue(disCom);
-    m_driverController.x().whileTrue(new ManuelAlgueArm(algae, -0.4));
-    m_driverController.y().whileTrue(new ManuelAlgueArm(algae, 0.4));
+    m_driverController.x().whileTrue(new ManuelAlgueArm(algae, -0.25));
+    m_driverController.y().whileTrue(new ManuelAlgueArm(algae, 0.25));
    /*  m_driverController.x().onTrue(new InstantCommand(() -> {
      algae.arm.setSetpoint(0);
     }));
