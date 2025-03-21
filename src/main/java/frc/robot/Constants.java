@@ -97,7 +97,7 @@ public final class Constants {
 
     // Contains gear ratios and motor rots
     public static class AlgeaConstants {
-        public static final double Kp = 0.6; 
+        public static final double Kp = 0.8; 
         
         //Motor rotations per rotation of the arm
         public static final double armGearRatio = 0.1;
