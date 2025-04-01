@@ -6,9 +6,10 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+// Class of Limelight Drive Command
 public class LimelightDriveCmd extends Command {
-  /** Creates a new LimelightDriveCmd. */
+
+  // Constructor of Limelight Drive Command
   public LimelightDriveCmd() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
