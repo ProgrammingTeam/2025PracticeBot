@@ -11,15 +11,18 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.SwerveSub;
 
+// Class of Drive Command -- Command
 public class DriveCmd extends Command {
   private final SwerveSub swerveSub;
   private final CommandJoystick RJoystick;
   private final CommandJoystick LJoystick;
 
+  // Constructor of Drive Command
   public DriveCmd(SwerveSub swerveSubsystem, CommandJoystick leftJoystick, CommandJoystick rightJoystick) {
     swerveSub = swerveSubsystem;
     RJoystick = rightJoystick;
     LJoystick = leftJoystick;
+    
     addRequirements(swerveSub);
   }
 
