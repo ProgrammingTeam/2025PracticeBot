@@ -7,14 +7,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.FunnelSub;
 
+// Class of IntakeCommand -- Command
 public class IntakeCommand extends Command {
   FunnelSub m_FunnelSub;
 
-  /** Creates a new FunnelCommand. */
+  // Constructor of IntakeCommand
   public IntakeCommand(FunnelSub subFunnel) {
     m_FunnelSub = subFunnel;
+    
     addRequirements(m_FunnelSub);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +28,6 @@ public class IntakeCommand extends Command {
   @Override
   public void execute() {
     m_FunnelSub.intake.forward();
-
   }
 
   // Called once the command ends or is interrupted.
