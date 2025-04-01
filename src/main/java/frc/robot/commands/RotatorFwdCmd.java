@@ -7,35 +7,34 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSub;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-
+// The class for RotatorForwardCommand
 public class RotatorFwdCmd extends Command {
   AlgaeSub m_AlgaeSub;
   public RotatorFwdCmd(AlgaeSub SubAlgea) {
     m_AlgaeSub = SubAlgea;
+    
     addRequirements(m_AlgaeSub);
-      // Use addRequirements() here to declare subsystem dependencies.
   }
 
-  // Called when the command is initially scheduled.
+  // Called during initialization
   @Override
   public void initialize() {
     m_AlgaeSub.rotater.spin(0.0);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called every time this cmd is scheduled
   @Override
   public void execute() {
     m_AlgaeSub.rotater.spin(1);
   }
 
-  // Called once the command ends or is interrupted.
+  // Called once when the cmd is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_AlgaeSub.rotater.spin(0.0);
   }
 
-  // Returns true when the command should end.
+  // Returns false when cmd is finished
   @Override
   public boolean isFinished() {
     return false;
