@@ -20,6 +20,7 @@ public class FunnelSub extends SubsystemBase {
   // it will be used -Loki
   // Protected classes are not accessable from outside the package -- Similar use to public except a difference 
   // Refer to @link https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in -- Adrian
+  
   public final class Intake {
     SparkMax intakeMotor;
 
