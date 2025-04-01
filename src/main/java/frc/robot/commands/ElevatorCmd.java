@@ -10,18 +10,19 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSub;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+// Class of Elevator Command -- Command
 public class ElevatorCmd extends Command {
   ElevatorSub M_Elvsub;
   CommandXboxController M_xboxController;
   CommandJoystick m_Joystick;
-  /** Creates a new ElevatorCmd. */
+
+  // Constructor of Elevator Command
   public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController, CommandJoystick joystick) {
     M_Elvsub = Elvsub;
     M_xboxController = xboxController;
     m_Joystick = joystick;
+    
     addRequirements(Elvsub); 
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
