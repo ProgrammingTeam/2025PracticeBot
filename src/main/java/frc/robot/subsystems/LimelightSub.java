@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.reduxrobotics.sensors.canandgyro.Canandgyro;
 
 import edu.wpi.first.math.VecBuilder;
