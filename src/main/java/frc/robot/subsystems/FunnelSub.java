@@ -20,38 +20,38 @@ public class FunnelSub extends SubsystemBase {
   // it will be used -Loki
   // Protected classes are not accessable from outside the package -- Similar use to public except a difference 
   // Refer to @link https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in -- Adrian
-  public final class Intake {
-    SparkMax intakeMotor;
+  // public final class Intake {
+  //   SparkMax intakeMotor;
 
-    // Constructor Intake
-    public Intake() {
-      intakeMotor = new SparkMax(Constants.CANBus.coralIntake, SparkLowLevel.MotorType.kBrushless);
-      SparkMaxConfig config = new SparkMaxConfig();
+  //   // Constructor Intake
+  //   public Intake() {
+  //     intakeMotor = new SparkMax(Constants.CANBus.coralIntake, SparkLowLevel.MotorType.kBrushless);
+  //     SparkMaxConfig config = new SparkMaxConfig();
 
-    // when not inverted, positive percent output drives the elevator upward
-    config.inverted(true);
-    intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-    }
+  //   // when not inverted, positive percent output drives the elevator upward
+  //   config.inverted(true);
+  //   intakeMotor.configure(config, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+  //   }
 
-    // Basic move methods -- On or Off
-    public void forward() {
-      intakeMotor.set(1);
-    } 
+  //   // Basic move methods -- On or Off
+  //   public void forward() {
+  //     intakeMotor.set(1);
+  //   } 
 
-    public void stop() {
-      intakeMotor.set(0);
-    }
-  }
+  //   public void stop() {
+  //     intakeMotor.set(0);
+  //   }
+  // }
 
   // Nested class Dispenser
   public final class Dispenser {
     SparkMax leftMotor;
-    SparkMax rightMotor;
+  //  SparkMax rightMotor;
 
     // Constructor dispenser
     public Dispenser() {
       leftMotor = new SparkMax(Constants.CANBus.lCoralShooter, SparkLowLevel.MotorType.kBrushless);
-      rightMotor = new SparkMax(Constants.CANBus.rCoralShooter, SparkLowLevel.MotorType.kBrushless);
+      //rightMotor = new SparkMax(Constants.CANBus.rCoralShooter, SparkLowLevel.MotorType.kBrushless);
 
       SparkMaxConfig configL = new SparkMaxConfig();
       configL.inverted(false);
@@ -59,27 +59,27 @@ public class FunnelSub extends SubsystemBase {
       configR.inverted(true);
 
       leftMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
-      rightMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
+  //    rightMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     }
 
     // Basic move cmds -- Set both motors at half speed or off
     public void forward() {
       leftMotor.set(0.5);
-      rightMotor.set(0.5);
+   //   rightMotor.set(0.5);
     }
 
     public void stop() {
       leftMotor.set(0);
-      rightMotor.set(0);
+     // rightMotor.set(0);
     }
   }
 
-  public final Intake intake;
+ // public final Intake intake;
   public final Dispenser dispenser;
 
   // Creates a new funnel sub constructor
   public FunnelSub() {
-    intake = new Intake();
+  //  intake = new Intake();
     dispenser = new Dispenser();
   }
 

@@ -37,7 +37,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import frc.robot.commands.DispenserCommand;
-import frc.robot.commands.IntakeCommand;
+//import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.Score;
 import frc.robot.commands.RotatorFwdCmd;
 import frc.robot.commands.RotatorBwdCmd;
@@ -53,16 +53,15 @@ public class RobotContainer {
 
   SwerveDrive m_Swerve;
  private final AlgaeSub algae = new AlgaeSub();
- //private final FunnelSub FunnelSubSystem = new FunnelSub();
+ private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
 
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
-  
   private final ElevatorCmd m_ElevatorCmd;
   private final DriveCmd driveCom;
  // private final IntakeCommand inCom; 
-  //private final DispenserCommand disCom;
+  private final DispenserCommand disCom;
   private final RotatorFwdCmd fwdCom;
   private final RotatorBwdCmd bwdCom;
 
@@ -78,7 +77,7 @@ public class RobotContainer {
     CanandEventLoop.getInstance();
     m_ElevatorCmd = new ElevatorCmd(m_ElvSub, m_driverController, rightJoystick);
    // inCom = new IntakeCommand(FunnelSubSystem);
-   // disCom = new DispenserCommand(FunnelSubSystem);
+    disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
     bwdCom = new RotatorBwdCmd(algae);
     
@@ -144,7 +143,7 @@ public class RobotContainer {
 
     // Funnel button commands -- button linking
     // m_driverController.a().onTrue(inCom);
-    // m_driverController.b().onTrue(disCom);
+     m_driverController.b().whileTrue(disCom);
 
     // PID elevator commands -- button linking
     //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));

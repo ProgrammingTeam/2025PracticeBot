@@ -26,13 +26,13 @@ public class DriveCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    swerveSub.driveScaled(0, 0, 0);
+    swerveSub.driveUnscaled(0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerveSub.driveScaled(
+    swerveSub.driveUnscaled(
         MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyY), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
         MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyX), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
         RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
@@ -42,7 +42,7 @@ public class DriveCmd extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerveSub.driveScaled(0, 0, 0);
+    swerveSub.driveUnscaled(0, 0, 0);
   }
 
   // Returns true when the command should end.

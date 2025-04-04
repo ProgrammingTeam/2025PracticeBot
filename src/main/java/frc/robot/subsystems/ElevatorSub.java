@@ -38,7 +38,10 @@ public class ElevatorSub extends SubsystemBase {
     configL.inverted(true);
 
     SparkMaxConfig configR = new SparkMaxConfig();
-    configR.follow(Constants.CANBus.lElevator,false);
+    configR.follow(Constants.CANBus.lElevator,true);
+
+    configL.smartCurrentLimit(30);
+    configR.smartCurrentLimit(30);
 
     leftElevateMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     rightElevateMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -57,18 +60,18 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
     SmartDashboard.putNumber("PID Output", pid.calculate(encoderValueAsFieldHeight()));
    
-    move(MathUtil.clamp(pid.calculate(encoderValueAsFieldHeight()), -1, 1));
+    // move(MathUtil.clamp(pid.calculate(encoderValueAsFieldHeight()), -1, 1));
    
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
     SmartDashboard.putNumber("PID D Value", pid.getD());
     
     
-    if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
+    if ((ElevatorPositions.L4.height <= encoderValueAsFieldHeight())) {
       elevatorDriveSpeedMultiplier = 0.1;
-    } else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.L3.height <= encoderValueAsFieldHeight())) {
       elevatorDriveSpeedMultiplier = 0.2;
-    } else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
+    } else if ((ElevatorPositions.travel.height <= encoderValueAsFieldHeight())) {
       elevatorDriveSpeedMultiplier = 1;
     } else {
       elevatorDriveSpeedMultiplier = 1;
@@ -76,7 +79,7 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void move(double elevateSpeed) {
-    leftElevateMotor.set(elevateSpeed);
+    leftElevateMotor.set(-elevateSpeed);
   }
   
   public double EncoderValue() {

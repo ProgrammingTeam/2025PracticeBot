@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -33,7 +34,7 @@ public class ElevatorCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    M_Elvsub.move(M_xboxController.getLeftY() * (m_Joystick.getRawAxis(Constants.joySilder)-1) * -1/2);
+    M_Elvsub.move((MathUtil.applyDeadband(M_xboxController.getLeftY(), 0.05) * (m_Joystick.getRawAxis(Constants.joySilder)-1) * -1/2));
   }
 
   // Called once the command ends or is interrupted.

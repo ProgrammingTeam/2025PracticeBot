@@ -26,7 +26,7 @@ public class AutoElevatorCmd extends Command {
   // Called when first init
   @Override
   public void initialize() {
-    m_ElvSub.changePosition(m_ElevatorPosition);
+  //  m_ElvSub.changePosition(m_ElevatorPosition);
   }
 
   // TODO: Add logic to execute
@@ -40,6 +40,7 @@ public class AutoElevatorCmd extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_ElvSub.atPidSetpoint(); 
+    return true;
+    //return m_ElvSub.atPidSetpoint(); 
   }
 }
