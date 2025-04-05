@@ -61,7 +61,7 @@ public class AlgaeSub extends SubsystemBase {
       rotatorMotor = new SparkMax(Constants.CANBus.algaeRotator, SparkLowLevel.MotorType.kBrushless);
       SparkMaxConfig config = new SparkMaxConfig();
       config.idleMode(IdleMode.kBrake);
-      config.smartCurrentLimit(10);
+      config.smartCurrentLimit(20);
     }
 
     public void spin(double spin) {
