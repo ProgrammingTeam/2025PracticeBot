@@ -31,7 +31,7 @@ public class AlgaeSub extends SubsystemBase {
       angleEncoder = armMotor.getEncoder();
      // PID.setTolerance(0.02);
       SparkMaxConfig armConfig = new SparkMaxConfig();
-      armConfig.smartCurrentLimit(40);
+      armConfig.smartCurrentLimit(30);
     }
   /*   
     private double motorRotationsToArmRotations(double motor) {
@@ -61,6 +61,7 @@ public class AlgaeSub extends SubsystemBase {
       rotatorMotor = new SparkMax(Constants.CANBus.algaeRotator, SparkLowLevel.MotorType.kBrushless);
       SparkMaxConfig config = new SparkMaxConfig();
       config.idleMode(IdleMode.kBrake);
+      config.smartCurrentLimit(10);
     }
 
     public void spin(double spin) {
