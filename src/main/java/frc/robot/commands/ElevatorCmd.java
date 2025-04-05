@@ -16,6 +16,7 @@ public class ElevatorCmd extends Command {
   ElevatorSub M_Elvsub;
   CommandXboxController M_xboxController;
   CommandJoystick m_Joystick;
+  double incrementedPosition;
   /** Creates a new ElevatorCmd. */
   public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController, CommandJoystick joystick) {
     M_Elvsub = Elvsub;
@@ -28,13 +29,17 @@ public class ElevatorCmd extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    M_Elvsub.move(0);
+   // M_Elvsub.move(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    M_Elvsub.move((MathUtil.applyDeadband(M_xboxController.getLeftY(), 0.05) * (m_Joystick.getRawAxis(Constants.joySilder)-1) * -1/2));
+    if (M_xboxController.getLeftY() >= 0.5) {
+      incrementedPosition = M_Elvsub.currentSetPoint() - (1/60);
+      M_Elvsub.changePosition(incrementedPosition);
+    }
+   // M_Elvsub.move((MathUtil.applyDeadband(M_xboxController.getLeftY(), 0.05) * (m_Joystick.getRawAxis(Constants.joySilder)-1) * -1/2));
   }
 
   // Called once the command ends or is interrupted.

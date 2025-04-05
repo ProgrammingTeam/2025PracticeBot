@@ -26,7 +26,7 @@ public class ElevatorSub extends SubsystemBase {
   private final SparkMax rightElevateMotor = new SparkMax(Constants.CANBus.rElevator, MotorType.kBrushless);
   private final RelativeEncoder leftEncoder;
 
-  private ElevatorPositions m_Position;
+  private double m_Position;
   public double elevatorDriveSpeedMultiplier;
 
   // Constructor of ElevatorSub
@@ -49,9 +49,9 @@ public class ElevatorSub extends SubsystemBase {
     // pid.setTolerance(0.5);
   }
  
-  public void changePosition(ElevatorPositions position){
+  public void changePosition(double position){
     m_Position = position;
-    pid.setSetpoint(m_Position.height);
+    pid.setSetpoint(m_Position);
   }
  
   @Override
@@ -95,6 +95,9 @@ public class ElevatorSub extends SubsystemBase {
     leftEncoder.setPosition(0);
   }
 
+  public double currentSetPoint() {
+    return pid.getSetpoint();
+  }
   //@return end of coral manipulator compared to ground level of the field in inches
   //public double encoderValueAsFieldHeight() {
   //  return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
