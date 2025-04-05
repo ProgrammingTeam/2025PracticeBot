@@ -57,22 +57,22 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
-    SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
-    SmartDashboard.putNumber("PID Output", pid.calculate(encoderValueAsFieldHeight()));
+   // SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
+    SmartDashboard.putNumber("PID Output", pid.calculate(leftEncoder.getPosition()));
     SmartDashboard.putNumber("PID SetPoint", pid.getSetpoint());
    
-    move(MathUtil.clamp(pid.calculate(encoderValueAsFieldHeight()), -1, 1));
+    move(MathUtil.clamp(pid.calculate(leftEncoder.getPosition()), -1, 1));
    
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
     SmartDashboard.putNumber("PID D Value", pid.getD());
     
     
-    if ((ElevatorPositions.L4.height <= encoderValueAsFieldHeight())) {
+    if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.1;
-    } else if ((ElevatorPositions.L3.height <= encoderValueAsFieldHeight())) {
+    } else if ((ElevatorPositions.L3.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.2;
-    } else if ((ElevatorPositions.travel.height <= encoderValueAsFieldHeight())) {
+    } else if ((ElevatorPositions.travel.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 1;
     } else {
       elevatorDriveSpeedMultiplier = 1;
@@ -96,7 +96,7 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   //@return end of coral manipulator compared to ground level of the field in inches
-  public double encoderValueAsFieldHeight() {
-    return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
-  }
+  //public double encoderValueAsFieldHeight() {
+  //  return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
+  //}
 }

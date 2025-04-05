@@ -52,11 +52,11 @@ public final class Constants {
                                                 //1.927
     public static enum ElevatorPositions {
       L1(27),
-      L2(11),
-      L3(19.4),
-      L4(25),
-      corolStation(11),
-      travel(9.7),
+      L2(7.7),
+      L3(58.153),
+      L4(91.72),
+      corolStation(7.7),
+      travel(0),
       net(26.333),
       // startAlgaeLow(3),
       // startAlgaeHigh(2),
