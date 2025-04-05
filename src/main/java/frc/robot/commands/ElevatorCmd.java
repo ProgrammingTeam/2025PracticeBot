@@ -14,15 +14,14 @@ import frc.robot.subsystems.ElevatorSub;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ElevatorCmd extends Command {
   ElevatorSub M_Elvsub;
-  CommandXboxController M_xboxController;
-  CommandJoystick m_Joystick;
   double incrementedPosition;
+  double m_rate;
+
   /** Creates a new ElevatorCmd. */
-  public ElevatorCmd(ElevatorSub Elvsub, CommandXboxController xboxController, CommandJoystick joystick) {
+  public ElevatorCmd(ElevatorSub Elvsub, double rate) {
     M_Elvsub = Elvsub;
-    M_xboxController = xboxController;
-    m_Joystick = joystick;
-    addRequirements(Elvsub); 
+    m_rate = rate;
+    addRequirements(M_Elvsub); 
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -35,14 +34,9 @@ public class ElevatorCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (M_xboxController.getLeftY() >= 0.5) {
-      incrementedPosition = M_Elvsub.currentSetPoint() + (1/60);
+      incrementedPosition = M_Elvsub.currentSetPoint() + (m_rate);
       M_Elvsub.changePosition(incrementedPosition);
-    }
-    else if (M_xboxController.getLeftY() >= 0.5) {
-      incrementedPosition = M_Elvsub.currentSetPoint() - (1/60);
-      M_Elvsub.changePosition(incrementedPosition);
-    }
+
    // M_Elvsub.move((MathUtil.applyDeadband(M_xboxController.getLeftY(), 0.05) * (m_Joystick.getRawAxis(Constants.joySilder)-1) * -1/2));
   }
 

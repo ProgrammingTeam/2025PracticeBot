@@ -33,7 +33,7 @@ public class ElevatorSub extends SubsystemBase {
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig configL = new SparkMaxConfig();
-
+    
     // negative percent output results in increased height when not inverted
     configL.inverted(true);
 

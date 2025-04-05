@@ -43,9 +43,10 @@ public final class Constants {
 
     // Constants for the elevator -- speed, accel, etc...
   public static class ElevatorConstants {
-    public static final double kP = 0.15;
+    public static final double kP = 0.1;
     public static final double kI = 0.0000;
     public static final double kD = 0;
+    
 
     public static final double mountingHeight = 9.7; //inch
     public static final double rotationsPerInch = 5.9952; //full revolutions of motor per inch elevator raised

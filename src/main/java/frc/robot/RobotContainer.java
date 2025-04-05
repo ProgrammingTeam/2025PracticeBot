@@ -13,7 +13,6 @@ import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
 import frc.robot.commands.ElevatorCmd;
-import frc.robot.commands.LimelightPositionCom;
 import frc.robot.commands.ManuelAlgueArm;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
@@ -58,7 +57,7 @@ public class RobotContainer {
 
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
-  private final ElevatorCmd m_ElevatorCmd;
+  ElevatorCmd m_ElevatorCmd;
   private final DriveCmd driveCom;
  // private final IntakeCommand inCom; 
   private final DispenserCommand disCom;
@@ -75,7 +74,6 @@ public class RobotContainer {
   // Constructor of RobotContainer; Contains subsystems, OI devices, and commands init
   public RobotContainer() {
     CanandEventLoop.getInstance();
-    m_ElevatorCmd = new ElevatorCmd(m_ElvSub, m_driverController, rightJoystick);
    // inCom = new IntakeCommand(FunnelSubSystem);
     disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
@@ -147,6 +145,8 @@ public class RobotContainer {
     // m_driverController.a().onTrue(inCom);
      m_driverController.b().whileTrue(disCom);
 
+     m_driverController.axisGreaterThan(1, 0.5).whileTrue(new ElevatorCmd(m_ElvSub, -0.016666));
+     m_driverController.axisLessThan(1, -0.5).whileTrue(new ElevatorCmd(m_ElvSub, 0.016666));
     // PID elevator commands -- button linking
     //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
     //  m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
