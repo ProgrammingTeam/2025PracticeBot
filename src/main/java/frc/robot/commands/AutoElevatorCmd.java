@@ -26,12 +26,14 @@ public class AutoElevatorCmd extends Command {
   // Called when first init
   @Override
   public void initialize() {
-  //  m_ElvSub.changePosition(m_ElevatorPosition);
+
   }
 
   // TODO: Add logic to execute
   @Override
-  public void execute() {}
+  public void execute() {
+    m_ElvSub.changePosition(m_ElevatorPosition);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

@@ -93,7 +93,7 @@ public class RobotContainer {
     subSwerve = new SwerveSub(m_Swerve, m_ElvSub);
     //m_LimelightSub = new LimelightSub(subSwerve);
     driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
-    m_ElvSub.setDefaultCommand(m_ElevatorCmd);
+   // m_ElvSub.setDefaultCommand(m_ElevatorCmd);
     subSwerve.setDefaultCommand(driveCom);
     autoChooser = AutoBuilder.buildAutoChooser();
     SmartDashboard.putData("Auto Chooser", autoChooser);
@@ -125,18 +125,20 @@ public class RobotContainer {
     })); */
 
     // Right joystick left side
-    // - - 4
-    // 3 2 1
-    rightJoystick.button(8).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L1));
-    rightJoystick.button(9).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L2));
-    rightJoystick.button(10).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3));
-    rightJoystick.button(7).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
+    // - - C
+    // 2 3 4
+    rightJoystick.button(8).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
+    rightJoystick.button(9).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3));
+    rightJoystick.button(10).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L2));
+    rightJoystick.button(7).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
+
 
     // Right joystick right side
-    // - - e
-    // c - -
-    rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
-    rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
+    // - - T
+    // N - -
+    rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.net));
+    rightJoystick.button(11).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel));
+   // rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
 
     m_driverController.leftBumper().whileTrue(fwdCom);
     m_driverController.rightBumper().whileTrue(bwdCom);

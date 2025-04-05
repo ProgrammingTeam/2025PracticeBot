@@ -46,7 +46,7 @@ public class ElevatorSub extends SubsystemBase {
     leftElevateMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     rightElevateMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     
-    pid.setTolerance(0.5);
+    // pid.setTolerance(0.5);
   }
  
   public void changePosition(ElevatorPositions position){
@@ -59,8 +59,9 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
     SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
     SmartDashboard.putNumber("PID Output", pid.calculate(encoderValueAsFieldHeight()));
+    SmartDashboard.putNumber("PID SetPoint", pid.getSetpoint());
    
-    // move(MathUtil.clamp(pid.calculate(encoderValueAsFieldHeight()), -1, 1));
+    move(MathUtil.clamp(pid.calculate(encoderValueAsFieldHeight()), -1, 1));
    
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
@@ -79,7 +80,7 @@ public class ElevatorSub extends SubsystemBase {
   }
 
   public void move(double elevateSpeed) {
-    leftElevateMotor.set(-elevateSpeed);
+    leftElevateMotor.set(elevateSpeed);
   }
   
   public double EncoderValue() {

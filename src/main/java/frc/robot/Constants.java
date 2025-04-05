@@ -43,7 +43,7 @@ public final class Constants {
 
     // Constants for the elevator -- speed, accel, etc...
   public static class ElevatorConstants {
-    public static final double kP = 0.18;
+    public static final double kP = 0.15;
     public static final double kI = 0.0000;
     public static final double kD = 0;
 
@@ -56,7 +56,7 @@ public final class Constants {
       L3(19.4),
       L4(25),
       corolStation(11),
-      travel(0),
+      travel(9.7),
       net(26.333),
       // startAlgaeLow(3),
       // startAlgaeHigh(2),
@@ -67,13 +67,6 @@ public final class Constants {
       private ElevatorPositions(double height) {
           this.height = height;
       }
-          
-      // public static final double L1 = 18;
-      // public static final double L2 = 31;
-      // public static final double L3 = 47;
-      // public static final double L4 = 72;
-      // public static final double corolStation = 37;
-      // public static final double travel = 0;
     }
   }
 
