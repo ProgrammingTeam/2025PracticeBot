@@ -98,6 +98,9 @@ public class ElevatorSub extends SubsystemBase {
   public double currentSetPoint() {
     return pid.getSetpoint();
   }
+  public void changeKp(double Kp) {
+    pid.setP(Kp);
+  }
   //@return end of coral manipulator compared to ground level of the field in inches
   //public double encoderValueAsFieldHeight() {
   //  return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;

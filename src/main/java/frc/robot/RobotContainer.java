@@ -145,8 +145,8 @@ public class RobotContainer {
     // m_driverController.a().onTrue(inCom);
      m_driverController.b().whileTrue(disCom);
 
-     m_driverController.axisGreaterThan(1, 0.5).whileTrue(new ElevatorCmd(m_ElvSub, -0.016666));
-     m_driverController.axisLessThan(1, -0.5).whileTrue(new ElevatorCmd(m_ElvSub, 0.016666));
+     m_driverController.axisGreaterThan(1, 0.5).whileTrue(new ElevatorCmd(m_ElvSub, -0.02));
+     m_driverController.axisLessThan(1, -0.5).whileTrue(new ElevatorCmd(m_ElvSub, 0.02));
     // PID elevator commands -- button linking
     //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
     //  m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));

@@ -26,6 +26,12 @@ public class AutoElevatorCmd extends Command {
   // Called when first init
   @Override
   public void initialize() {
+    if (m_ElvSub.currentSetPoint() >= m_ElevatorPosition.height) {
+      m_ElvSub.changeKp(0.05);
+    }
+    else {
+      m_ElvSub.changeKp(0.15);
+    }
     m_ElvSub.changePosition(m_ElevatorPosition.height);
   }
 
