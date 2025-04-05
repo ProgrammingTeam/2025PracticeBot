@@ -36,6 +36,10 @@ public class ElevatorCmd extends Command {
   @Override
   public void execute() {
     if (M_xboxController.getLeftY() >= 0.5) {
+      incrementedPosition = M_Elvsub.currentSetPoint() + (1/60);
+      M_Elvsub.changePosition(incrementedPosition);
+    }
+    else if (M_xboxController.getLeftY() >= 0.5) {
       incrementedPosition = M_Elvsub.currentSetPoint() - (1/60);
       M_Elvsub.changePosition(incrementedPosition);
     }
