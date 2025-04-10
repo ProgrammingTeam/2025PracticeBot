@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.AlgaeSub;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
+// Public command class of Rotator Backward Command
 public class RotatorBwdCmd extends Command {
   AlgaeSub m_AlgaeSub;
   public RotatorBwdCmd(AlgaeSub SubAlgea) {
     m_AlgaeSub = SubAlgea;
+    
     addRequirements(m_AlgaeSub);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.

@@ -9,14 +9,25 @@ import frc.robot.Constants;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
 
+<<<<<<< HEAD
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class limelightPositionCom extends Command {
+=======
+// Class of cmd LimelightPositionCom
+public class LimelightPositionCom extends Command {
+>>>>>>> 031efa3c99c8d8c9d649adedf9821b07cd2bd3f2
   private final LimelightSub m_LimelightSub;
   private final SwerveSub m_Swerve;
   private final boolean LeftOffset;
   boolean toPosition;
+<<<<<<< HEAD
   /** Creates a new limlightPositionCom. */
   public limelightPositionCom(LimelightSub LimeSub, SwerveSub SwerveSub, boolean leftDirectionalOffset) {
+=======
+  
+  // Constructor of the LimelightPosCom class
+  public LimelightPositionCom(LimelightSub LimeSub, SwerveSub SwerveSub, boolean leftDirectionalOffset) {
+>>>>>>> 031efa3c99c8d8c9d649adedf9821b07cd2bd3f2
     m_LimelightSub = LimeSub;
     m_Swerve = SwerveSub;
     LeftOffset = leftDirectionalOffset;
@@ -25,7 +36,7 @@ public class limelightPositionCom extends Command {
     addRequirements(m_Swerve);
   }
 
-  // Called when the command is initially scheduled.
+  // Called when initially scheduled
   @Override
   public void initialize() {
     toPosition = false;
@@ -38,33 +49,29 @@ public class limelightPositionCom extends Command {
     if (LeftOffset) {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.LeftPositionOffset + 1) {
         m_Swerve.driveScaled(0.2, 0, 0);
-      }
-      else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.LeftPositionOffset - 1) {
+      } else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.LeftPositionOffset - 1) {
         m_Swerve.driveScaled(-0.2, 0, 0);
-      }
-      else {
+      } else {
         m_Swerve.driveScaled(0, 0, 0);
         toPosition = true;
       }
-    }
-    else {
+    } else {
       if(m_LimelightSub.distenceFromTarget > Constants.LimelightConstants.RightPositionOffset + 1) {
         m_Swerve.driveScaled(0.2, 0, 0);
-      }
-      else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.RightPositionOffset - 1) {
+      } else if(m_LimelightSub.distenceFromTarget < Constants.LimelightConstants.RightPositionOffset - 1) {
         m_Swerve.driveScaled(-0.2, 0, 0);
-      }
-      else {
+      } else {
         m_Swerve.driveScaled(0, 0, 0);
         toPosition = true;
       }
     }
   }
-  // Called once the command ends or is interrupted.
+  
+  // Called when interrupted -- Add a safety function 
   @Override
   public void end(boolean interrupted) {}
 
-  // Returns true when the command should end.
+  // Return the position to when the cmd ends
   @Override
   public boolean isFinished() {
     return toPosition;

@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-
 import com.pathplanner.lib.config.PIDConstants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;

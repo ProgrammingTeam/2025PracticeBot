@@ -19,8 +19,8 @@ public class AutoElevatorCmd extends Command {
   public AutoElevatorCmd(ElevatorSub ElvSub, ElevatorPositions elevatorPosition) {
     m_ElvSub = ElvSub;
     m_ElevatorPosition = elevatorPosition;
+    
     addRequirements(m_ElvSub);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when first init
