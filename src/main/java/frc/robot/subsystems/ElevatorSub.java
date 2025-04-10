@@ -5,15 +5,19 @@
 package frc.robot.subsystems;
 
 
+import com.pathplanner.lib.config.PIDConstants;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.thethriftybot.ThriftyNova.PIDConfig;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,6 +26,9 @@ import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 
 public class ElevatorSub extends SubsystemBase {
   private final PIDController pid = new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+  private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(0, 0, 0,0);
+
+  
   private final SparkMax leftElevateMotor = new SparkMax(Constants.CANBus.lElevator, MotorType.kBrushless);
   private final SparkMax rightElevateMotor = new SparkMax(Constants.CANBus.rElevator, MotorType.kBrushless);
   private final RelativeEncoder leftEncoder;
@@ -33,7 +40,7 @@ public class ElevatorSub extends SubsystemBase {
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig configL = new SparkMaxConfig();
-    
+
     // negative percent output results in increased height when not inverted
     configL.inverted(true);
 
@@ -46,7 +53,7 @@ public class ElevatorSub extends SubsystemBase {
     leftElevateMotor.configure(configL, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     rightElevateMotor.configure(configR, ResetMode.kNoResetSafeParameters, PersistMode.kNoPersistParameters);
     
-    // pid.setTolerance(0.5);
+
   }
  
   public void changePosition(double position){
@@ -57,11 +64,11 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
-   // SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
+    // SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
     SmartDashboard.putNumber("PID Output", pid.calculate(leftEncoder.getPosition()));
     SmartDashboard.putNumber("PID SetPoint", pid.getSetpoint());
-   
-    move(MathUtil.clamp(pid.calculate(leftEncoder.getPosition()), -1, 1));
+
+    move(MathUtil.clamp(pid.calculate(leftEncoder.getPosition()), -1, 1) + elevatorFeedforward.calculate(leftEncoder.getVelocity()));
    
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
@@ -98,11 +105,9 @@ public class ElevatorSub extends SubsystemBase {
   public double currentSetPoint() {
     return pid.getSetpoint();
   }
-  public void changeKp(double Kp) {
-    pid.setP(Kp);
-  }
+
   //@return end of coral manipulator compared to ground level of the field in inches
-  //public double encoderValueAsFieldHeight() {
-  //  return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
-  //}
+  // public double encoderValueAsFieldHeight() {
+  //   return leftEncoder.getPosition() / Constants.ElevatorConstants.rotationsPerInch + Constants.ElevatorConstants.mountingHeight;
+  // }
 }
