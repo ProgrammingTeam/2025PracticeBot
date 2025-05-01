@@ -43,7 +43,7 @@ public final class Constants {
 
     // Constants for the elevator -- speed, accel, etc...
   public static class ElevatorConstants {
-    public static final double kP = 0.1;
+    public static final double kP = 0.15;
     public static final double kI = 0.0000;
     public static final double kD = 0;
     
@@ -56,7 +56,7 @@ public final class Constants {
       L2(7.7),
       L3(58.153),
       L4(91.72),
-      corolStation(7.7),
+      corolStation(6.76),
       travel(0),
       net(26.333),
       // startAlgaeLow(3),

@@ -24,8 +24,8 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 
 public class ElevatorSub extends SubsystemBase {
-  private final PIDController pid = new PIDController(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
-  private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(0, 0, 0,0);
+  private final PIDController pid = new PIDController(0.15, ElevatorConstants.kI, 0.1);
+  private final ElevatorFeedforward elevatorFeedforward = new ElevatorFeedforward(0.0625, 0.75, 0,0);
 
   
   private final SparkMax leftElevateMotor = new SparkMax(Constants.CANBus.lElevator, MotorType.kBrushless);
@@ -39,7 +39,6 @@ public class ElevatorSub extends SubsystemBase {
   public ElevatorSub() { 
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig configL = new SparkMaxConfig();
-
     // negative percent output results in increased height when not inverted
     configL.inverted(true);
 
@@ -65,14 +64,16 @@ public class ElevatorSub extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
     // SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
     SmartDashboard.putNumber("PID Output", pid.calculate(leftEncoder.getPosition()));
+    SmartDashboard.putNumber("PID test", m_Position);
     SmartDashboard.putNumber("PID SetPoint", pid.getSetpoint());
 
-    move(MathUtil.clamp(pid.calculate(leftEncoder.getPosition()), -1, 1) + elevatorFeedforward.calculate(leftEncoder.getVelocity()));
+    move(MathUtil.clamp(pid.calculate(leftEncoder.getPosition()), -1, 1));
    
     SmartDashboard.putNumber("PID P Value", pid.getP());
     SmartDashboard.putNumber("PID I Value", pid.getI());
     SmartDashboard.putNumber("PID D Value", pid.getD());
     
+    SmartDashboard.putNumber("Elevator Velocity", leftEncoder.getVelocity());
     
     if ((ElevatorPositions.L4.height <= leftEncoder.getPosition())) {
       elevatorDriveSpeedMultiplier = 0.1;
