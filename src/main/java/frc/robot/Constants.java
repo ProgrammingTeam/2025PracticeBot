@@ -14,6 +14,8 @@ public final class Constants {
   public static final int joyZ = 2;
   public static final int joySilder = 3;
 
+  public static final double voltageSupply = 12;
+
   public static class CANBus {
 
     //drive 
@@ -43,13 +45,21 @@ public final class Constants {
 
     // Constants for the elevator -- speed, accel, etc...
   public static class ElevatorConstants {
-    public static final double kP = 0.15;
+    public static final double kP = 0.1;
     public static final double kI = 0.0000;
     public static final double kD = 0;
     
+    public static final double maxVel = 1;
+    public static final double maxAccel = 1;
+    public static final double allowedErr = 0;
 
     public static final double mountingHeight = 9.7; //inch
     public static final double rotationsPerInch = 5.9952; //full revolutions of motor per inch elevator raised
+    public static final double acceptibleErrorZone = 0;
+    public static final double maxAcceleration = 1;
+    public static final double maxVelocity = 1;
+    public static final double minOutput = -1;
+    public static final double maxOutput = 1;
                                                 //1.927
     public static enum ElevatorPositions {
       L1(27),
@@ -69,6 +79,7 @@ public final class Constants {
           this.height = height;
       }
     }
+
   }
 
     // Constants for the port of the joysticks

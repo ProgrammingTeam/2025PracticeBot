@@ -28,6 +28,7 @@ public class AutoElevatorCmd extends Command {
   public void initialize() {
 
     m_ElvSub.changePosition(m_ElevatorPosition.height);
+    
   }
 
   // TODO: Add logic to execute
@@ -42,6 +43,6 @@ public class AutoElevatorCmd extends Command {
   @Override
   public boolean isFinished() {
     return true;
-    //return m_ElvSub.atPidSetpoint(); 
+
   }
 }
