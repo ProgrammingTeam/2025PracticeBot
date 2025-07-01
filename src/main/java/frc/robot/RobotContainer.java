@@ -125,7 +125,7 @@ public class RobotContainer {
     // - - C
     // 2 3 4
 
-   /* rightJoystick.button(8).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
+    rightJoystick.button(8).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L4));
     rightJoystick.button(9).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L3));
     rightJoystick.button(10).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.L2));
     rightJoystick.button(7).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
@@ -137,7 +137,7 @@ public class RobotContainer {
     rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.net));
     rightJoystick.button(11).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.travel));
    // rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
- */
+ 
     m_driverController.leftBumper().whileTrue(fwdCom);
     m_driverController.rightBumper().whileTrue(bwdCom);
 
