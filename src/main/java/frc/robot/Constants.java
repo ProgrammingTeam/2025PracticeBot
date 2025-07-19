@@ -49,8 +49,8 @@ public final class Constants {
     public static final double kI = 0.0000;
     public static final double kD = 0;
     
-    public static final double maxVel = 1;
-    public static final double maxAccel = 1;
+    public static final double maxVel = 240;
+    public static final double maxAccel = 240;
     public static final double allowedErr = 0;
 
     public static final double mountingHeight = 9.7; //inch

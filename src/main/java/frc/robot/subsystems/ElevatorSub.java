@@ -51,16 +51,16 @@ public class ElevatorSub extends SubsystemBase {
     leftEncoder = leftElevateMotor.getEncoder();
     SparkMaxConfig configL = new SparkMaxConfig();
     // Set PID gains
-  configL.closedLoop
-    .p(0.4)
-    .i(Constants.ElevatorConstants.kI)
-    .d(Constants.ElevatorConstants.kD)
-    .outputRange(Constants.ElevatorConstants.minOutput, Constants.ElevatorConstants.maxOutput)
-    .maxMotion
-    .maxVelocity(Constants.ElevatorConstants.maxVel)
-    .maxAcceleration(Constants.ElevatorConstants.maxAccel)
-    .allowedClosedLoopError(Constants.ElevatorConstants.allowedErr);
-;
+    configL.closedLoop
+      .p(0.4)
+      .i(Constants.ElevatorConstants.kI)
+      .d(Constants.ElevatorConstants.kD)
+      .outputRange(Constants.ElevatorConstants.minOutput, Constants.ElevatorConstants.maxOutput)
+      .maxMotion
+      .maxVelocity(Constants.ElevatorConstants.maxVel)
+      .maxAcceleration(Constants.ElevatorConstants.maxAccel)
+      .allowedClosedLoopError(Constants.ElevatorConstants.allowedErr);
+
     // negative percent output results in increased height when not inverted
     configL.inverted(true);
 
@@ -87,7 +87,7 @@ public class ElevatorSub extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Elevator Encoder Position", leftEncoder.getPosition());
-    SmartDashboard.putNumber("Elevator percent Output", leftElevateMotor.getAppliedOutput());
+    SmartDashboard.putNumber("Elevator percent Output", leftElevateMotor.get());
     // SmartDashboard.putNumber("Current Elevator Height", encoderValueAsFieldHeight());
    // SmartDashboard.putNumber("PID Output", pid.calculate(leftEncoder.getPosition()));
     
