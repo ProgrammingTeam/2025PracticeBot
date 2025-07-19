@@ -9,6 +9,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ClimbCommand;
 import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
@@ -41,6 +42,7 @@ import frc.robot.commands.RotatorFwdCmd;
 import frc.robot.commands.RotatorBwdCmd;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.AlgaeSub;
+import frc.robot.subsystems.ClimbSub;
 import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
@@ -50,9 +52,10 @@ import swervelib.parser.SwerveParser;
 public class RobotContainer {
 
   SwerveDrive m_Swerve;
- private final AlgaeSub algae = new AlgaeSub();
- private final FunnelSub FunnelSubSystem = new FunnelSub();
+  private final AlgaeSub algae = new AlgaeSub();
+  private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
+  private final ClimbSub m_ClimbSub = new ClimbSub();
 
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
@@ -77,7 +80,6 @@ public class RobotContainer {
     disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
     bwdCom = new RotatorBwdCmd(algae);
-    
     try {
       double maximumSpeed = 0.1;
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
@@ -111,6 +113,9 @@ public class RobotContainer {
     //rightJoystick.button(1).whileTrue(disCom);
     m_driverController.x().whileTrue(new ManuelAlgueArm(algae, -0.25));
     m_driverController.y().whileTrue(new ManuelAlgueArm(algae, 0.25));
+
+    m_driverController.a().whileTrue(new ClimbCommand(m_ClimbSub, 0.5));
+    m_driverController.b().whileTrue(new ClimbCommand(m_ClimbSub, -0.5));
    /*  m_driverController.x().onTrue(new InstantCommand(() -> {
      algae.arm.setSetpoint(0);
     }));
