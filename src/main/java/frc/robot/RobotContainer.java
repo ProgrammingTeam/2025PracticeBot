@@ -9,6 +9,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.Constants.ElevatorConstants.ElevatorPositions;
 import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.Autos;
+import frc.robot.commands.ClimbCom;
 import frc.robot.subsystems.ElevatorSub;
 
 import frc.robot.commands.DriveCmd;
@@ -42,6 +43,7 @@ import frc.robot.commands.RotatorFwdCmd;
 import frc.robot.commands.RotatorBwdCmd;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.AlgaeSub;
+import frc.robot.subsystems.ClimbSub;
 import frc.robot.subsystems.FunnelSub;
 import frc.robot.subsystems.SwerveSub;
 import swervelib.SwerveDrive;
@@ -54,6 +56,7 @@ public class RobotContainer {
  private final AlgaeSub algae = new AlgaeSub();
  private final FunnelSub FunnelSubSystem = new FunnelSub();
   private final ElevatorSub m_ElvSub = new ElevatorSub();
+  private final ClimbSub m_ClimbSub = new ClimbSub();
 
   private final SwerveSub subSwerve;
 //  private final LimelightSub m_LimelightSub;
@@ -142,8 +145,11 @@ public class RobotContainer {
 
     // Funnel button commands -- button linking
     // m_driverController.a().onTrue(inCom);
-     m_driverController.b().whileTrue(disCom);
 
+     
+         m_driverController.a().whileTrue(new ClimbCom(m_ClimbSub, 0.5));
+     m_driverController.b().whileTrue(new ClimbCom(m_ClimbSub, -0.5));
+ 
     // PID elevator commands -- button linking
     //  m_driverController.y().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L1));
     //  m_driverController.b().and(m_driverController.pov(180).negate()).onTrue(new ElevatorMoveButton(m_ElvSub, ElevatorPositions.L2));
