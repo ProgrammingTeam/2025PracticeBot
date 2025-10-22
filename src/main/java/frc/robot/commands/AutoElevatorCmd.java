@@ -27,7 +27,7 @@ public class AutoElevatorCmd extends Command {
   @Override
   public void initialize() {
 
-    m_ElvSub.changePosition(m_ElevatorPosition.height);
+    m_ElvSub.changePosition(m_ElevatorPosition);
     
   }
 
