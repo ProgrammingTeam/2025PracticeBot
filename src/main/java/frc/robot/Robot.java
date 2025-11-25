@@ -12,6 +12,7 @@ import org.ironmaple.simulation.drivesims.COTS;
 import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnField;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnFly;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralAlgaeStack;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeCoralOnField;
 import org.littletonrobotics.junction.Logger;
@@ -27,6 +28,8 @@ import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Simulation.IntakeIOSim;
+import swervelib.SwerveDrive;
 
 
 /**
@@ -47,20 +50,7 @@ public class Robot extends TimedRobot {
   .getStructArrayTopic("AlgaePosesArray", Pose3d.struct)
   .publish();
   
-  final DriveTrainSimulationConfig driveTrainSimulationConfig = DriveTrainSimulationConfig.Default()
-          // Specify gyro type (for realistic gyro drifting and error simulation)
-          .withGyro(COTS.ofPigeon2())
-          // Specify swerve module (for realistic swerve dynamics)
-          .withSwerveModule(COTS.ofMark4(
-                  DCMotor.getKrakenX60(1), // Drive motor is a Kraken X60
-                  DCMotor.getFalcon500(1), // Steer motor is a Falcon 500
-                  COTS.WHEELS.COLSONS.cof, // Use the COF for Colson Wheels
-                  3)) // L3 Gear ratio
-          // Configures the track length and track width (spacing between swerve modules)
-          .withTrackLengthTrackWidth(Inches.of(24), Inches.of(24))
-          // Configures the bumper size (dimensions of the robot bumper)
-          .withBumperSize(Inches.of(30), Inches.of(30)
-          );
+
             
               
               /**
@@ -142,14 +132,7 @@ public class Robot extends TimedRobot {
               /** This function is called once when the robot is first started up. */
               @Override
               public void simulationInit() {
-                this.swerveDriveSimulation =
 
-                new SwerveDriveSimulation(
-                  // Specify Configuration
-                  driveTrainSimulationConfig,
-                  // Specify starting pose
-                  new Pose2d(3, 3, new Rotation2d())
-          );
                 // Obtains the default instance of the simulation world, which is a Crescendo Arena.
             
             // Overrides the default simulation
@@ -170,6 +153,7 @@ public class Robot extends TimedRobot {
                   new Pose2d(2, 2, Rotation2d.fromDegrees(90))));
                   SimulatedArena.getInstance().addGamePiece(new ReefscapeAlgaeOnField(new Translation2d(2,2)));
                   SimulatedArena.getInstance().addGamePiece(new ReefscapeCoralAlgaeStack(new Translation2d(3,2)));
+                  IntakeIOSim.coralOnFly.addGamePieceAfterTouchGround(SimulatedArena.getInstance());
             
             
           
@@ -183,7 +167,10 @@ public class Robot extends TimedRobot {
             coralPoses.accept(SimulatedArena.getInstance().getGamePiecesArrayByType("Coral"));
             SimulatedArena.getInstance().simulationPeriodic();
             algaePoses.accept(SimulatedArena.getInstance().getGamePiecesArrayByType("Algae"));
-            
+            SimulatedArena.getInstance().addGamePieceProjectile(IntakeIOSim.coralOnFly);
+
+
+            ReefscapeAlgaeOnFly.setHitNetCallBack(() -> System.out.println("ALGAE hits NET!"));
 
 //SimulatedArena.getInstance().addDriveTrainSimulation(swerveDriveSimulation);
 

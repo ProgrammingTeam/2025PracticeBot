@@ -91,7 +91,7 @@ public class RobotContainer {
     
     subSwerve = new SwerveSub(m_Swerve, m_ElvSub);
     //m_LimelightSub = new LimelightSub(subSwerve);
-    driveCom = new DriveCmd(subSwerve, leftJoystick, rightJoystick);
+    driveCom = new DriveCmd(subSwerve, m_driverController);
     m_ElvSub.setDefaultCommand(m_ElevatorCmd);
     subSwerve.setDefaultCommand(driveCom);
     autoChooser = AutoBuilder.buildAutoChooser();

@@ -7,19 +7,18 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.subsystems.ElevatorSub;
 import frc.robot.subsystems.SwerveSub;
 
 public class DriveCmd extends Command {
   private final SwerveSub swerveSub;
-  private final CommandJoystick RJoystick;
-  private final CommandJoystick LJoystick;
+  private final CommandXboxController m_XBox;
 
-  public DriveCmd(SwerveSub swerveSubsystem, CommandJoystick leftJoystick, CommandJoystick rightJoystick) {
+  public DriveCmd(SwerveSub swerveSubsystem, CommandXboxController xbox) {
     swerveSub = swerveSubsystem;
-    RJoystick = rightJoystick;
-    LJoystick = leftJoystick;
+    m_XBox = xbox;
     addRequirements(swerveSub);
   }
 
@@ -33,9 +32,9 @@ public class DriveCmd extends Command {
   @Override
   public void execute() {
     swerveSub.driveUnscaled(
-        MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyY), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
-        MathUtil.applyDeadband(LJoystick.getRawAxis(Constants.joyX), 0.05) * Constants.speedMultiplier *  (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2,
-        RJoystick.getRawAxis(Constants.joyX) * Constants.speedMultiplier * (LJoystick.getRawAxis(Constants.joySilder)-1) * -1/2
+        MathUtil.applyDeadband(m_XBox.getRawAxis(Constants.joyY), 0.05) * Constants.speedMultiplier,
+        MathUtil.applyDeadband(m_XBox.getRawAxis(Constants.joyX), 0.05) * Constants.speedMultiplier,
+        m_XBox.getRawAxis(4)
     );
   }
 

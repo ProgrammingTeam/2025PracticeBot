@@ -5,15 +5,26 @@
 package frc.robot.subsystems;
 
 
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
+import java.util.concurrent.Flow.Publisher;
+
 import org.ironmaple.simulation.SimulatedArena;
 import org.ironmaple.simulation.drivesims.AbstractDriveTrainSimulation;
+import org.ironmaple.simulation.drivesims.SwerveDriveSimulation;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,9 +32,24 @@ import swervelib.SwerveDrive;
 
 // Class t=of SwerveSub
 public class SwerveSub extends SubsystemBase {
+  Pose3d simPose3d = new Pose3d();
+  public static Pose2d simPose2dPublic = new Pose2d();
   SwerveDrive swerveDrive;
   ElevatorSub m_ElvSub;
+  public static ChassisSpeeds simFieldVelocity;
+
+  StructPublisher<Pose3d> sim = NetworkTableInstance.getDefault()
+  .getStructTopic("Swerve Sim Location", Pose3d.struct).publish();
+  // Pose3d poseA = new Pose3d();
+  // Pose3d poseB = new Pose3d();
   
+  // StructPublisher<Pose3d> publisher = NetworkTableInstance.getDefault()
+  //   .getStructTopic("MyPose", Pose3d.struct).publish();
+  // StructArrayPublisher<Pose3d> arrayPublisher = NetworkTableInstance.getDefault()
+  //   .getStructArrayTopic("MyPoseArray", Pose3d.struct).publish();
+  
+  
+
   // Constructor for SwerveSub
   public SwerveSub(SwerveDrive swerve, ElevatorSub elevatorSub) {
     swerveDrive = swerve;
@@ -31,7 +57,7 @@ public class SwerveSub extends SubsystemBase {
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
     swerveDrive.setCosineCompensator(false); // Disables cosine compensation for simulations since it causes discrepancies not seen in real life.
     RobotConfig config;
-    
+
     try {
       config = RobotConfig.fromGUISettings();
     } catch (Exception e) {
@@ -91,5 +117,16 @@ public class SwerveSub extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber( "Max chassis Velocity", swerveDrive.getMaximumChassisVelocity());
+    simPose3d = new Pose3d(swerveDrive.getSimulationDriveTrainPose().get());
+    sim.set(simPose3d);
+    
+   
+    if (swerveDrive.getSimulationDriveTrainPose().isPresent()) {
+      simPose3d = new Pose3d(swerveDrive.getSimulationDriveTrainPose().get());
+      simPose2dPublic = simPose3d.toPose2d();
+      simFieldVelocity = swerveDrive.getFieldVelocity();
+      
+   }
+    
   }
 }
