@@ -16,6 +16,7 @@ import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.ManuelAlgueArm;
 import frc.robot.subsystems.LimelightSub;
 import frc.robot.subsystems.SwerveSub;
+import frc.robot.subsystems.Simulation.IntakeIOSim;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -63,7 +64,7 @@ public class RobotContainer {
   private final DispenserCommand disCom;
   private final RotatorFwdCmd fwdCom;
   private final RotatorBwdCmd bwdCom;
-
+  private final IntakeIOSim corralIoSim;
 
   private final CommandXboxController m_driverController = new CommandXboxController(
       OperatorConstants.kDriverControllerPort);
@@ -79,6 +80,7 @@ public class RobotContainer {
     disCom = new DispenserCommand(FunnelSubSystem);
     fwdCom = new RotatorFwdCmd(algae);
     bwdCom = new RotatorBwdCmd(algae);
+    corralIoSim = new IntakeIOSim(null);
     
     try {
       double maximumSpeed = 0.1;
@@ -137,9 +139,11 @@ public class RobotContainer {
     rightJoystick.button(14).onTrue(new AutoElevatorCmd(m_ElvSub, ElevatorPositions.corolStation));
     rightJoystick.button(11).onTrue(new InstantCommand(m_ElvSub::resetEncoder));
 
-    m_driverController.leftBumper().whileTrue(fwdCom);
-    m_driverController.rightBumper().whileTrue(bwdCom);
+    // m_driverController.leftBumper().whileTrue(fwdCom);
+    // m_driverController.rightBumper().whileTrue(bwdCom);
 
+    
+   
     // Funnel button commands -- button linking
     // m_driverController.a().onTrue(inCom);
      m_driverController.b().whileTrue(disCom);

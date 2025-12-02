@@ -98,7 +98,7 @@ this.intakeSimulation = IntakeSimulation.InTheFrameIntake(
     public void launchCorral() {
         // if there is a note in the intake, it will be removed and return true; otherwise, returns false
         if (intakeSimulation.obtainGamePieceFromIntake()) {}
-          //  ShooterIOSim.launchNote(); // notify the simulated flywheels to launch a note
+         //   ShooterIOSim.launchNote(); // notify the simulated flywheels to launch a note
     }
     
 }

@@ -11,8 +11,9 @@ import frc.robot.subsystems.Simulation.IntakeIOSim;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class SimIntakeCom extends Command {
-  IntakeIOSim m_IntakeIOSim;
-  XboxController m_XboxController;
+  private final IntakeIOSim m_IntakeIOSim;
+  private final XboxController m_XboxController;
+  boolean intakeRunning = false;
   /** Creates a new SimIntakeCom. */
   public SimIntakeCom(IntakeIOSim ioSim, XboxController xBox) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -29,10 +30,17 @@ public class SimIntakeCom extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_XboxController.getAButtonPressed()) {
-      
+    if (m_XboxController.getLeftBumperButtonPressed()) {
+      // toggles weather or not the intake is running
+      intakeRunning =! intakeRunning;  
+      m_IntakeIOSim.setRunning(intakeRunning);
     }
     
+    if (m_XboxController.getRightBumperButtonPressed()) {
+      // toggles weather or not the intake is running
+      
+      m_IntakeIOSim.launchCorral();
+    }
   }
 
   // Called once the command ends or is interrupted.
